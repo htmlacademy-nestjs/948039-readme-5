@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@project/core": ["libs/core/src/index.ts"],
       "@project/libs/app/types": ["libs/app/types/src/index.ts"],
       "@project/libs/helpers": ["libs/helpers/src/index.ts"]
     }
