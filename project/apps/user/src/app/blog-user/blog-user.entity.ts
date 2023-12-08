@@ -9,6 +9,10 @@ export class BlogUserEntity implements AuthUser {
   public name: string;
   public avatar: string;
 
+  constructor(user: AuthUser) {
+    this.populate(user);
+  }
+
   public toPlainObject() {
     return {
       passwordHash: this.passwordHash,
@@ -23,6 +27,8 @@ export class BlogUserEntity implements AuthUser {
     this.avatar = data.avatar;
     this.email = data.email;
     this.name = data.name;
+    this.id = data.id;
+    this.passwordHash = data.passwordHash;
   }
 
   public async setPassword(password: string): Promise<BlogUserEntity> {
