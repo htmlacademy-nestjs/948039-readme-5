@@ -4,6 +4,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { AUTH_USER_EXISTS, AUTH_USER_NOT_FOUND, AUTH_USER_PASSWROD_WRONG } from './authentication.constants';
 import { BlogUserEntity } from '../blog-user/blog-user.entity';
 import { LoginUserDto } from './dto/login-user.dto';
+import { ChangePasswordDto } from './dto/change-password.dto';
 
 @Injectable()
 export class AuthenticationService {
@@ -48,7 +49,18 @@ export class AuthenticationService {
     return userEntity.toPlainObject();
   }
 
-  public async getUser(id: string) {
-    return this.blogUserRepository.findById(id);
+  public async changePassword(dto: ChangePasswordDto) {
+    const {oldPassword, newPassword, id} = dto;
+    const existUser = await this.blogUserRepository.findById(id);
+    if (!existUser) {
+      throw new NotFoundException(AUTH_USER_NOT_FOUND);
+    }
+    const userEntity = new BlogUserEntity(existUser);
+    const isComparePassword = await userEntity.comparePassword(oldPassword);
+    if (!isComparePassword) {
+      throw new UnauthorizedException(AUTH_USER_PASSWROD_WRONG);
+    }
+    await userEntity.setPassword(newPassword)
+    return this.blogUserRepository.save(userEntity);
   }
 }

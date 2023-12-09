@@ -1,10 +1,11 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Post, Put } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import {fillDto} from '@project/libs/helpers';
 import { UserRdo } from './rdo/user.rdo';
 import { LoginUserDto } from './dto/login-user.dto';
 import { LoggedUserRdo } from './rdo/logged-user.rdo';
+import { ChangePasswordDto } from './dto/change-password.dto';
 @Controller('auth')
 export class AuthenticationController {
   constructor(
@@ -23,9 +24,9 @@ export class AuthenticationController {
     return fillDto(LoggedUserRdo, {...loggedUser, accessToken: 'Bearer lalalala'})
   }
 
-  @Get(':id')
-  public async show(@Param('id') id: string) {
-    const existUser = await this.authService.getUser(id);
-    return fillDto(UserRdo, existUser.toPlainObject());
+  @Put('password')
+  public async changePassword(@Body() dto: ChangePasswordDto) {
+    await this.authService.changePassword(dto);
+    return {};
   }
  }
