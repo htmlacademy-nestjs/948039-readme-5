@@ -8,5 +8,6 @@ import { VideoBlogRepository } from './blog-content/video-blog-content/video-blo
   imports: [],
   controllers: [BlogController],
   providers: [BlogService, BlogRepository, VideoBlogRepository],
+  exports: [BlogRepository]
 })
 export class BlogModule {}

@@ -1,0 +1,15 @@
+# Create a new user
+PUT http://localhost:3000/api/like/f61e4457-0c2b-4362-a900-57db92630a19 HTTP/1.1
+Content-Type: application/json
+
+{
+  "userId": "some-id"
+}
+
+###
+
+# Login user by email and password
+GET http://localhost:3000/api/like/f61e4457-0c2b-4362-a900-57db92630a19 HTTP/1.1
+Content-Type: application/json
+
+###
