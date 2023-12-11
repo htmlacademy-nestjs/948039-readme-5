@@ -1,7 +1,7 @@
 import {Blog, BlogStatus, BlogType} from '@project/libs/app/types'
 
 export class BlogEntity implements Blog {
-  public type: BlogType.Video;
+  public type: BlogType;
   public id: string;
   public contentId: string;
   public createdDate: Date;
@@ -33,7 +33,7 @@ export class BlogEntity implements Blog {
   }
 
   public populate(data: Blog): void {
-    this.type = BlogType.Video;
+    this.type = data.type;
     this.id = data.id;
     this.author = data.author;
     this.contentId = data.contentId;

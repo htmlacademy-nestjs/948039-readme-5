@@ -1,4 +1,4 @@
-# Create a new user
+# Create a new video blog
 POST http://localhost:3000/api/blog HTTP/1.1
 Content-Type: application/json
 
@@ -14,8 +14,25 @@ Content-Type: application/json
 
 ###
 
+# Create a new text blog
+POST http://localhost:3000/api/blog HTTP/1.1
+Content-Type: application/json
+
+{
+  "type": "text",
+  "content": {
+    "name": "Cute cats",
+    "annotation": "cats",
+    "content": "cute cats play together"
+  },
+  "author": "Adam Morgan",
+  "tags": ["cats"]
+}
+
+###
+
 # Login user by email and password
-GET http://localhost:3000/api/blog/7123d427-3dab-4938-979f-fa836157434f HTTP/1.1
+GET http://localhost:3000/api/blog/915ec3db-4a98-455d-aad0-0e911b86ed6c HTTP/1.1
 Content-Type: application/json
 
 ###

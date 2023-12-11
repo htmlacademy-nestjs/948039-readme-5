@@ -10,5 +10,6 @@ export * from './lib/photo-blog-content.interface';
 export * from './lib/blog.interface';
 export * from './lib/blog-status.enum';
 export * from './lib/blog-type.enum';
+export * from './lib/blog-content.interface';
 
 export * from './lib/like.interface';

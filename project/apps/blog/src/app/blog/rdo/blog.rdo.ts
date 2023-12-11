@@ -1,4 +1,4 @@
-import { BlogStatus, BlogType, VideoBlogContent } from '@project/libs/app/types';
+import { BlogStatus, BlogType, LinkBlogContent, TextBlogContent, VideoBlogContent } from '@project/libs/app/types';
 import { BlogContent } from '../dto/create-blog.dto';
 import { Expose, Type } from 'class-transformer';
 
@@ -13,6 +13,8 @@ export class BlogRdo {
         property: "type",
         subTypes: [
             { value: VideoBlogContent, name: "video" },
+            { value: TextBlogContent, name: "text" },
+            { value: LinkBlogContent, name: "link" },
         ]
     }
   })
