@@ -5,7 +5,7 @@ export class PhotoBlogEntity implements PhotoBlogContent {
   public id: string;
   public name: string;
 
-  constructor(blog: PhotoBlogEntity) {
+  constructor(blog: PhotoBlogContent) {
     this.populate(blog);
   }
 
@@ -18,7 +18,7 @@ export class PhotoBlogEntity implements PhotoBlogContent {
     };
   }
 
-  public populate(data: PhotoBlogEntity): void {
+  public populate(data: PhotoBlogContent): void {
     this.path = data.path;
     this.id = data.id;
     this.name = data.name;

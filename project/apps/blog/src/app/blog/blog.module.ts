@@ -3,7 +3,7 @@ import { BlogController } from './blog.controller';
 import { BlogService } from './blog.service';
 import { BlogRepository } from './blog.repository';
 import { VideoBlogRepository } from './video-blog-content/video-blog.repository';
-import { BaseBlogContentService } from './blog-content/base-blog.service';
+import { BaseBlogContentService } from './base-blog/base-blog.service';
 import { TextBlogRepository } from './text-blog-content/text-blog.repository';
 import { LinkBlogRepository } from './link-blog-content/link-blog.repository';
 import { PhotoBlogRepository } from './photo-blog-content/photo-blog.repository';

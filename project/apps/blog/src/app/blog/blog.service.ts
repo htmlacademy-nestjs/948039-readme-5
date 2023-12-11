@@ -7,8 +7,8 @@ import { BlogEntity } from './blog.entity';
 import {fillDto} from '@project/libs/helpers';
 import { BlogRdo } from './rdo/blog.rdo';
 import { UpdateBlogDto } from './dto/update-blog.tdo';
-import { BaseBlogContentService } from './blog-content/base-blog.service';
-import { baseBlogEntityFactory } from './blog-content/base-blog.factory';
+import { BaseBlogContentService } from './base-blog/base-blog.service';
+import { baseBlogEntityFactory } from './base-blog/base-blog.factory';
 
 @Injectable()
 export class BlogService {

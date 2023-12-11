@@ -5,7 +5,7 @@ export class QuoteBlogEntity implements QuoteBlogContent {
   public id: string;
   public author: string;
 
-  constructor(blog: QuoteBlogEntity) {
+  constructor(blog: QuoteBlogContent) {
     this.populate(blog);
   }
 
@@ -18,7 +18,7 @@ export class QuoteBlogEntity implements QuoteBlogContent {
     };
   }
 
-  public populate(data: QuoteBlogEntity): void {
+  public populate(data: QuoteBlogContent): void {
     this.quote = data.quote;
     this.id = data.id;
     this.author = data.author;

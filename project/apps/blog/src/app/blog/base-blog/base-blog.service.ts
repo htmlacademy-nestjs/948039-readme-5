@@ -1,20 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { VideoBlogRepository } from '../video-blog-content/video-blog.repository';
 import { TextBlogRepository } from '../text-blog-content/text-blog.repository';
-import { BaseBlogContentEntity } from './content-blog.entity';
+import { BaseBlogContentEntity } from './base-blog.entity';
 import { BlogType } from '@project/libs/app/types';
-import { VideoBlogEntity } from '../video-blog-content/video-blog.entity';
-import { TextBlogEntity } from '../text-blog-content/text-blog.entity';
 import { LinkBlogRepository } from '../link-blog-content/link-blog.repository';
-import { LinkBlogEntity } from '../link-blog-content/link-blog.entity';
-
-const BLOG_REPOSITORY_MAP = {
-  [BlogType.Video]: 'videoBlogRepository',
-  [BlogType.Text]: 'textBlogRepository',
-  [BlogType.Link]: 'linkBlogRepository',
-  [BlogType.Photo]: 'photoBlogRepository',
-  [BlogType.Quote]: 'quoteBlogRepository',
-}
+import { PhotoBlogRepository } from '../photo-blog-content/photo-blog.repository';
+import { QuoteBlogRepository } from '../quote-blog-content/quote-blog.repository';
+import { BLOG_REPOSITORY_MAP } from './constants';
 
 @Injectable()
 export class BaseBlogContentService {
@@ -22,18 +14,20 @@ export class BaseBlogContentService {
     private readonly videoBlogRepository: VideoBlogRepository,
     private readonly textBlogRepository: TextBlogRepository,
     private readonly linkBlogRepository: LinkBlogRepository,
+    private readonly photoBlogRepository: PhotoBlogRepository,
+    private readonly quoteBlogRepository: QuoteBlogRepository,
   ) {}
 
     public async save(type: BlogType, entity: BaseBlogContentEntity) {
       if (type) {
-      return this[BLOG_REPOSITORY_MAP[type]].save(entity)
+      return this[BLOG_REPOSITORY_MAP[type]].save(entity);
       }
       throw new Error('Not implements blog type');
     }
 
     public async findById(type: BlogType, id: string) {
       if (type) {
-        return this[BLOG_REPOSITORY_MAP[type]].save(id)
+        return this[BLOG_REPOSITORY_MAP[type]].save(id);
       }
       throw new Error('Not implements blog type');
     }

@@ -5,7 +5,7 @@ export class LinkBlogEntity implements LinkBlogContent {
   public id: string;
   public description: string;
 
-  constructor(blog: LinkBlogEntity) {
+  constructor(blog: LinkBlogContent) {
     this.populate(blog);
   }
 
@@ -18,7 +18,7 @@ export class LinkBlogEntity implements LinkBlogContent {
     };
   }
 
-  public populate(data: LinkBlogEntity): void {
+  public populate(data: LinkBlogContent): void {
     this.link = data.link;
     this.id = data.id;
     this.description = data.description;
