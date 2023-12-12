@@ -1,0 +1,4 @@
+# Get user by ID
+GET http://localhost:3000/api/user/ID HTTP/1.1
+
+###
