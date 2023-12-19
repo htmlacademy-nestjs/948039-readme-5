@@ -64,6 +64,6 @@ export class AuthenticationService {
       throw new UnauthorizedException(AUTH_USER_PASSWROD_WRONG);
     }
     await userEntity.setPassword(newPassword)
-    return this.blogUserRepository.save(userEntity);
+    return this.blogUserRepository.update(userEntity.id, userEntity);
   }
 }

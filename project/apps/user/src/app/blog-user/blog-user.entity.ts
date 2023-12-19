@@ -1,7 +1,7 @@
 import {AuthUser} from '@project/libs/app/types'
 import { compare, genSalt, hash } from 'bcrypt';
 import { SALT_ROUND } from './blog-user.constants';
-
+import {Document} from 'mongoose'
 export class BlogUserEntity implements AuthUser {
   public passwordHash: string;
   public id?: string;
@@ -39,5 +39,9 @@ export class BlogUserEntity implements AuthUser {
 
   public async comparePassword(password: string): Promise<boolean> {
     return compare(password, this.passwordHash);
+  }
+
+  static fromObject(data: AuthUser & Document): BlogUserEntity {
+    return new BlogUserEntity({...data, id: data._id});
   }
 }
