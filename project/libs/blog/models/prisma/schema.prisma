@@ -1,0 +1,111 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../../../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Blog {
+  id           String     @id @default(uuid())
+  type         String
+  createdDate  DateTime   @default(now()) @map("created_date")
+  postedDate   DateTime   @updatedAt @map("posted_date")
+  status       String
+  author       String
+  tags         String[]
+  repost       Boolean    @default(false)
+  repostId     String?    @map("repost_id")
+  repostAuthor String?    @map("repost_author")
+  comments     Comment[]
+  likes        Like[]
+  photoBlog    PhotoBlog?
+  linkBlog     LinkBlog?
+  videoBlog    VideoBlog?
+  quoteBlog    QuoteBlog?
+  textBlog     TextBlog?
+
+  @@map("blogs")
+}
+
+model TextBlog {
+  id         String @id @default(uuid())
+  name       String
+  annotation String
+  content    String
+  blog       Blog   @relation(fields: [blogId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  blogId     String @unique @map("blog_id")
+
+  @@map("text_blogs")
+}
+
+model QuoteBlog {
+  id     String @id @default(uuid())
+  quote  String
+  author String
+  blog   Blog   @relation(fields: [blogId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  blogId String @unique @map("blog_id")
+
+  @@map("quote_blogs")
+}
+
+model VideoBlog {
+  id     String @id @default(uuid())
+  name   String
+  link   String
+  blog   Blog   @relation(fields: [blogId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  blogId String @unique @map("blog_id")
+
+  @@map("viedo_blogs")
+}
+
+model LinkBlog {
+  id          String  @id @default(uuid())
+  description String?
+  link        String
+  blog        Blog    @relation(fields: [blogId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  blogId      String  @unique @map("blog_id")
+
+  @@map("link_blogs")
+}
+
+model PhotoBlog {
+  id     String @id @default(uuid())
+  path   String
+  name   String
+  blog   Blog   @relation(fields: [blogId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  blogId String @unique @map("blog_id")
+
+  @@map("photo_blogs")
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  message   String
+  userId    String   @map("user_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  blog      Blog     @relation(fields: [blogId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  blogId    String   @map("blog_id")
+
+  @@index([blogId])
+  @@map("comments")
+}
+
+model Like {
+  userId    String   @map("user_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  blog      Blog     @relation(fields: [blogId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  blogId    String   @map("blog_id")
+
+  @@id([userId, blogId])
+  @@unique([userId, blogId])
+  @@index([blogId])
+  @@map("likes")
+}
