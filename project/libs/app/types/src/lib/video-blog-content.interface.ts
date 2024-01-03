@@ -7,4 +7,6 @@ export class VideoBlogContent {
   link: string;
   @Expose()
   id?: string;
+
+  blogId: string;
 }

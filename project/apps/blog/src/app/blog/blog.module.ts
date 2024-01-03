@@ -8,11 +8,12 @@ import { TextBlogRepository } from './text-blog-content/text-blog.repository';
 import { LinkBlogRepository } from './link-blog-content/link-blog.repository';
 import { PhotoBlogRepository } from './photo-blog-content/photo-blog.repository';
 import { QuoteBlogRepository } from './quote-blog-content/quote-blog.repository';
+import { PrismaClientService } from '@project/libs/blog/models';
 
 @Module({
   imports: [],
   controllers: [BlogController],
-  providers: [BlogService, BlogRepository, VideoBlogRepository, TextBlogRepository, LinkBlogRepository, PhotoBlogRepository, QuoteBlogRepository, BaseBlogContentService],
+  providers: [PrismaClientService, BlogService, BlogRepository, VideoBlogRepository, TextBlogRepository, LinkBlogRepository, PhotoBlogRepository, QuoteBlogRepository, BaseBlogContentService],
   exports: [BlogRepository]
 })
 export class BlogModule {}

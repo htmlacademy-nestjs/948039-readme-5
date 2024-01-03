@@ -1,6 +1,4 @@
-import { BlogType, LinkBlogContent, PhotoBlogContent, QuoteBlogContent, TextBlogContent, VideoBlogContent } from '@project/libs/app/types';
-
-export type BlogContent = LinkBlogContent | TextBlogContent | VideoBlogContent | PhotoBlogContent | QuoteBlogContent;
+import { BlogContent, BlogType } from '@project/libs/app/types';
 
 export class CreateBlogDto {
   public type: BlogType;

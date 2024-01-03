@@ -5,6 +5,7 @@ export class TextBlogEntity implements TextBlogContent {
   public id: string;
   public annotation: string;
   public content: string;
+  public blogId: string;
 
   constructor(blog: TextBlogContent) {
     this.populate(blog);
@@ -17,6 +18,7 @@ export class TextBlogEntity implements TextBlogContent {
       annotation: this.annotation,
       content: this.content,
       id: this.id,
+      blogId: this.blogId,
     };
   }
 
@@ -25,5 +27,10 @@ export class TextBlogEntity implements TextBlogContent {
     this.id = data.id;
     this.annotation = data.annotation;
     this.content = data.content;
+    this.blogId = data.blogId;
+  }
+
+  static fromObject(data: TextBlogContent): TextBlogEntity {
+    return new TextBlogEntity(data);
   }
 }

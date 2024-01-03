@@ -16,7 +16,7 @@ model Blog {
   type         String
   createdDate  DateTime   @default(now()) @map("created_date")
   postedDate   DateTime   @updatedAt @map("posted_date")
-  status       String
+  status       String?    @default("draft")
   author       String
   tags         String[]
   repost       Boolean    @default(false)

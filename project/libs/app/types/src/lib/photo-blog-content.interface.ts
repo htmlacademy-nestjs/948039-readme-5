@@ -7,4 +7,6 @@ export class PhotoBlogContent {
   name: string;
   @Expose()
   id?: string;
+
+  blogId: string;
 }

@@ -20,29 +20,29 @@ export class BaseBlogContentService {
 
     public async save(type: BlogType, entity: BaseBlogContentEntity) {
       if (type) {
-      return this[BLOG_REPOSITORY_MAP[type]].save(entity);
+        return this[BLOG_REPOSITORY_MAP[type]].save(entity);
       }
       throw new Error('Not implements blog type');
     }
 
-    public async findById(type: BlogType, id: string) {
-      if (type) {
-        return this[BLOG_REPOSITORY_MAP[type]].save(id);
-      }
-      throw new Error('Not implements blog type');
-    }
+    // public async findById(type: BlogType, id: string) {
+    //   if (type) {
+    //     return this[BLOG_REPOSITORY_MAP[type]].save(id);
+    //   }
+    //   throw new Error('Not implements blog type');
+    // }
 
-    public async update(type: BlogType, id: string, entity: BaseBlogContentEntity) {
-      if (type) {
-        return this[BLOG_REPOSITORY_MAP[type]].update(id, entity);
-      }
-      throw new Error('Not implements blog type');
-    }
+    // public async update(type: BlogType, id: string, entity: BaseBlogContentEntity) {
+    //   if (type) {
+    //     return this[BLOG_REPOSITORY_MAP[type]].update(id, entity);
+    //   }
+    //   throw new Error('Not implements blog type');
+    // }
 
-    public async deleteById(type: BlogType, id: string) {
-      if (type) {
-        return this[BLOG_REPOSITORY_MAP[type]].deleteById(id);
-      }
-      throw new Error('Not implements blog type');
-    }
+    // public async deleteById(type: BlogType, id: string) {
+    //   if (type) {
+    //     return this[BLOG_REPOSITORY_MAP[type]].deleteById(id);
+    //   }
+    //   throw new Error('Not implements blog type');
+    // }
 }
