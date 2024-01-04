@@ -19,4 +19,21 @@ export class QuoteBlogRepository extends BasePostgresRepository<QuoteBlogEntity,
     entity.id = record.id;
     return entity;
   }
+
+  public async update(id: string, entity: QuoteBlogEntity): Promise<QuoteBlogEntity> {
+    const record = await this.client.quoteBlog.update({
+      where: {blogId: id},
+      data: entity.toPlainObject()
+    });
+    const content = new QuoteBlogEntity(record);
+    return content;
+  }
+
+  public async deleteById(id: string): Promise<null> {
+    await this.client.quoteBlog.delete({
+      where: {blogId: id}
+    });
+
+    return null;
+  }
 }

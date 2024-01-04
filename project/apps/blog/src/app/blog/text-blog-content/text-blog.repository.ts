@@ -19,4 +19,21 @@ export class TextBlogRepository extends BasePostgresRepository<TextBlogEntity, T
     entity.id = record.id;
     return entity;
   }
+
+  public async update(id: string, entity: TextBlogEntity): Promise<TextBlogEntity> {
+    const record = await this.client.textBlog.update({
+      where: {blogId: id},
+      data: entity.toPlainObject()
+    });
+    const content = new TextBlogEntity(record);
+    return content;
+  }
+
+  public async deleteById(id: string): Promise<null> {
+    await this.client.textBlog.delete({
+      where: {blogId: id}
+    });
+
+    return null;
+  }
 }

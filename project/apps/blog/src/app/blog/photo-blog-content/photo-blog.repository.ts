@@ -19,4 +19,21 @@ export class PhotoBlogRepository extends BasePostgresRepository<PhotoBlogEntity,
     entity.id = record.id;
     return entity;
   }
+
+  public async update(id: string, entity: PhotoBlogEntity): Promise<PhotoBlogEntity> {
+    const record = await this.client.photoBlog.update({
+      where: {blogId: id},
+      data: entity.toPlainObject()
+    });
+    const content = new PhotoBlogEntity(record);
+    return content;
+  }
+
+  public async deleteById(id: string): Promise<null> {
+    await this.client.photoBlog.delete({
+      where: {blogId: id}
+    });
+
+    return null;
+  }
 }
