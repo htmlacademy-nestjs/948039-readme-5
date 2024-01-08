@@ -6,4 +6,4 @@ export const BLOG_REPOSITORY_MAP = {
   [BlogType.Link]: 'linkBlogRepository',
   [BlogType.Photo]: 'photoBlogRepository',
   [BlogType.Quote]: 'quoteBlogRepository',
-}
+} as const;
