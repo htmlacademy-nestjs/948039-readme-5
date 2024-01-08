@@ -7,4 +7,6 @@ export class QuoteBlogContent {
   author: string;
   @Expose()
   id?: string;
+
+  blogId: string;
 }

@@ -1,7 +1,6 @@
-import { BlogType, LinkBlogContent, PhotoBlogContent, QuoteBlogContent, TextBlogContent, VideoBlogContent } from '@project/libs/app/types';
+import { BlogContent, BlogType, LinkBlogContent, PhotoBlogContent, QuoteBlogContent, TextBlogContent, VideoBlogContent } from '@project/libs/app/types';
 import { VideoBlogEntity } from '../video-blog-content/video-blog.entity';
 import { TextBlogEntity } from '../text-blog-content/text-blog.entity';
-import { BlogContent } from '../dto/create-blog.dto';
 import { LinkBlogEntity } from '../link-blog-content/link-blog.entity';
 import { PhotoBlogEntity } from '../photo-blog-content/photo-blog.entity';
 import { QuoteBlogEntity } from '../quote-blog-content/quote-blog.entity';

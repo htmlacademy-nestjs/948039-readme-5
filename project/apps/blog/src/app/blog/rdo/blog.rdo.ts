@@ -1,5 +1,4 @@
-import { BlogStatus, BlogType, LinkBlogContent, PhotoBlogContent, QuoteBlogContent, TextBlogContent, VideoBlogContent } from '@project/libs/app/types';
-import { BlogContent } from '../dto/create-blog.dto';
+import { BlogContent, BlogStatus, BlogType, LinkBlogContent, PhotoBlogContent, QuoteBlogContent, TextBlogContent, VideoBlogContent } from '@project/libs/app/types';
 import { Expose, Type } from 'class-transformer';
 
 export class BlogRdo {

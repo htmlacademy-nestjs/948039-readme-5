@@ -9,4 +9,6 @@ export class TextBlogContent {
   content: string;
   @Expose()
   id?: string;
+
+  blogId: string;
 }

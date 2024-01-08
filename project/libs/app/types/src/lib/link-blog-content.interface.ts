@@ -7,4 +7,6 @@ export class LinkBlogContent {
   description?: string;
   @Expose()
   id?: string;
+
+  blogId: string;
 }

@@ -15,6 +15,12 @@ export class BlogController {
     return blog;
   }
 
+  @Get('')
+  public async find() {
+    const blog = await this.blogService.find();
+    return blog;
+  }
+
   @Get(':id')
   public async findById(@Param('id') id: string) {
     const blog = await this.blogService.findById(id);

@@ -4,7 +4,7 @@ export type BlogContent = LinkBlogContent | TextBlogContent | VideoBlogContent |
 
 export class UpdateBlogDto {
   content: BlogContent;
-  postedDate: Date;
   status: BlogStatus;
+  type: BlogType;
   tags: string[];
 }
