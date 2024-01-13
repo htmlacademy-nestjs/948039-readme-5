@@ -62,7 +62,7 @@
     "db:migrate": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "npx prisma migrate dev --schema ./schema.prisma --skip-generate --skip-seed",
+        "command": "npx prisma migrate dev --schema ./schema.prisma --name 'migrate' --skip-generate --skip-seed",
         "cwd": "libs/blog/models/prisma"
       }
     },

@@ -9,7 +9,6 @@ export class LikeEntity implements Like {
     this.populate(like);
   }
 
-
   public toPlainObject() {
     return {
       id: this.id,
@@ -21,5 +20,9 @@ export class LikeEntity implements Like {
   public populate(data: Like): void {
     this.blogId = data.blogId;
     this.userId = data.userId;
+  }
+
+  static fromObject(data: Like): LikeEntity {
+    return new LikeEntity(data);
   }
 }

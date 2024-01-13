@@ -1,25 +1,35 @@
 import { Injectable } from '@nestjs/common';
-import {BaseMemoryRepository} from '@project/core';
+import { BasePostgresRepository } from '@project/core';
 import { LikeEntity } from './like.entity';
+import { PrismaClientService } from '@project/libs/blog/models';
+import { Like } from '@project/libs/app/types';
 
 @Injectable()
-export class LikeRepository extends BaseMemoryRepository<LikeEntity> {
-  public async getAllById(blogId: string) {
-    const entities = Array.from(this.entities.values());
-    let count = entities.filter(entity => entity.blogId === blogId).length;
-    return count;
+export class LikeRepository extends BasePostgresRepository<LikeEntity, Like> {
+  constructor(
+    protected readonly client: PrismaClientService,
+  ) {
+    super(client, LikeEntity.fromObject);
   }
-
   public async setLike(blogId: string, userId: string) {
-    const entities = Array.from(this.entities.values());
-    let user = entities.find(entity => (entity.userId === userId) && (entity.blogId === blogId));
-    if (user === undefined) {
-      const likeEntity = new LikeEntity({blogId, userId})
-      user = await this.save(likeEntity);
-      return Promise.resolve(user);
+    const userId_blogId = {userId, blogId};
+    const existLike = await this.client.like.findUnique({
+      where: {
+        userId_blogId
+      }
+    })
+    let like
+    if (existLike) {
+      like = await this.client.like.delete({
+        where: {
+          userId_blogId
+        }
+      })
     } else {
-      await this.deleteById(user.id);
-      return Promise.resolve(null);
+      like = await this.client.like.create({
+        data: userId_blogId
+      })
     }
+    return like;
   }
 }

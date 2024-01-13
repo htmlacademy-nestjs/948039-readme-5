@@ -15,7 +15,7 @@ function getPosts() {
       id: FIRST_POST_UUID,
       type: 'video',
       status: 'draft',
-      author: FIRST_USER_ID,
+      userId: FIRST_USER_ID,
       videoBlog: {
         name: 'Mark Riman',
         link: 'https://www.youtube.com/watch?v=zoq0tAKpLBI'
@@ -25,7 +25,7 @@ function getPosts() {
       id: SECOND_POST_UUID,
       type: 'link',
       status: 'draft',
-      author: FIRST_USER_ID,
+      userId: FIRST_USER_ID,
       linkBlog: {
         link: 'https://www.youtube.com/watch?v=zoq0tAKpLBI'
       }
@@ -34,7 +34,7 @@ function getPosts() {
       id: THIRD_POST_UUID,
       type: 'photo',
       status: 'draft',
-      author: FIRST_USER_ID,
+      userId: FIRST_USER_ID,
       photoBlog: {
         path: 'https://clck.ru/37PzZS',
         name: 'Ivan Diador'
@@ -44,7 +44,7 @@ function getPosts() {
       id: FOURTH_POST_UUID,
       type: 'text',
       status: 'draft',
-      author: SECOND_USER_ID,
+      userId: SECOND_USER_ID,
       comments: [
         {
           message: 'Это действительно отличная книга!',
@@ -65,7 +65,7 @@ function getPosts() {
       id: FIFTH_POST_UUID,
       type: 'quote',
       status: 'draft',
-      author: SECOND_USER_ID,
+      userId: SECOND_USER_ID,
       quoteBlog: {
         quote: 'Без труда не вытянуть и рыбку из пруда',
         author: 'Ivan Diador',
@@ -84,7 +84,7 @@ async function seedDb(prismaClient: PrismaClient) {
         id: post.id,
         type: post.type,
         status: post.status,
-        author: post.author,
+        userId: post.userId,
         videoBlog: post.videoBlog ? {
           create: post.videoBlog
         } : undefined,

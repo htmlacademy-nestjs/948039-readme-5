@@ -1,24 +1,17 @@
 import { Body, Controller, Get, Param, Put } from '@nestjs/common';
 import { LikeService } from './like.service';
+import { SetLikeDto } from './dto/set-like';
 
 @Controller('like')
 export class LikeController {
   constructor(
     public readonly likeService: LikeService
   ) { }
-
-  @Get(':id')
-  public async getCount(@Param('id') id: string) {
-    const count = await this.likeService.getCount(id);
-    return count;
-  }
-
-  @Put(':id')
+  @Put('')
   public async setLike(
-    @Body() dto: {userId: string},
-    @Param('id') id: string
+    @Body() dto: SetLikeDto
     ) {
-      const like = await this.likeService.setLike(id, dto.userId);
+      const like = await this.likeService.setLike(dto);
       return like;
   }
 }

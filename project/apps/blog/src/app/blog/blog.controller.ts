@@ -1,7 +1,8 @@
-import { Body, Controller, Post, Get, Param, Put, Delete } from '@nestjs/common';
+import { Body, Controller, Post, Get, Param, Put, Delete, Query } from '@nestjs/common';
 import { BlogService } from './blog.service';
 import { CreateBlogDto } from './dto/create-blog.dto';
 import { UpdateBlogDto } from './dto/update-blog.tdo';
+import { BlogQuery } from './query/blog-query';
 
 @Controller('blog')
 export class BlogController {
@@ -16,9 +17,9 @@ export class BlogController {
   }
 
   @Get('')
-  public async find() {
-    const blog = await this.blogService.find();
-    return blog;
+  public async find(@Query() query: BlogQuery) {
+    const blogs = await this.blogService.find(query);
+    return blogs;
   }
 
   @Get(':id')
@@ -38,7 +39,7 @@ export class BlogController {
 
   @Delete(':id')
   public async deleteById(@Param('id') id: string) {
-    await this.blogService.deleteById(id);
-    return {};
+    const blog = await this.blogService.deleteById(id);
+    return blog;
   }
 }

@@ -8,7 +8,7 @@ export interface BlogWithCommentsLikes {
   postedDate?: Date;
   id?: string;
   status?: BlogStatus;
-  author: string;
+  userId: string;
   tags?: string[];
   repost?: boolean;
   repostId?: string;

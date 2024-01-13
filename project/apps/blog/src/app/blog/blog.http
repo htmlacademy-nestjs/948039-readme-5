@@ -5,11 +5,11 @@ Content-Type: application/json
 {
   "type": "video",
   "content": {
-    "name": "Cute cats",
+    "name": "Длина которая больше 20",
     "link": "https://www.youtube.com/watch?v=y0sF5xhGreA"
   },
-  "author": "Adam Smash",
-  "tags": ["thebest"]
+  "userId": "65a248fa590fc5abaf0d89ea",
+  "tags": ["Thebest#"]
 }
 
 ###
@@ -21,11 +21,11 @@ Content-Type: application/json
 {
   "type": "text",
   "content": {
-    "name": "Cute cats",
-    "annotation": "cats",
-    "content": "cute cats play together"
+    "name": "Cute cats and some more symbols for validate",
+    "annotation": "Длина текста должна быть 50 символов как минимум, так что будем растягивать как можем",
+    "content": "Длина текста должна быть 50 символов как минимум, так что будем растягивать как можем.И еще разок. Длина текста должна быть 50 символов как минимум, так что будем растягивать как можем"
   },
-  "author": "Adam Morgan",
+  "userId": "65a24913ebc68fe10750437a",
   "tags": ["cats"]
 }
 
@@ -62,7 +62,7 @@ Content-Type: application/json
 ###
 
 # Delete blog by id
-DELETE http://localhost:3000/api/blog/7123d427-3dab-4938-979f-fa836157434f HTTP/1.1
+DELETE http://localhost:3000/api/blog/f9dfff46-9bb2-42c1-a7ef-0614ecc01ccc HTTP/1.1
 Content-Type: application/json
 
 ###
