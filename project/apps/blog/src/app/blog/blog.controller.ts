@@ -1,8 +1,9 @@
 import { Body, Controller, Post, Get, Param, Put, Delete, Query } from '@nestjs/common';
 import { BlogService } from './blog.service';
 import { CreateBlogDto } from './dto/create-blog.dto';
-import { UpdateBlogDto } from './dto/update-blog.tdo';
+import { UpdateBlogDto } from './dto/update-blog.dto';
 import { BlogQuery } from './query/blog-query';
+import { RepostBlogDto } from './dto/repost-blog.dto';
 
 @Controller('blog')
 export class BlogController {
@@ -40,6 +41,15 @@ export class BlogController {
   @Delete(':id')
   public async deleteById(@Param('id') id: string) {
     const blog = await this.blogService.deleteById(id);
+    return blog;
+  }
+
+  @Post('/repost/:id')
+  public async repostById(
+    @Param('id') id: string,
+    @Body() dto: RepostBlogDto
+    ) {
+    const blog = await this.blogService.repostById(id, dto.userId);
     return blog;
   }
 }

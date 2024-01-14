@@ -3,17 +3,6 @@ import { IsArray, IsEnum, IsNotEmpty, IsNotEmptyObject, IsOptional, IsString, Ma
 
 import { BlogContentCreate, BlogStatus, BlogType, LinkBlogContentCreate, PhotoBlogContentCreate, QuoteBlogContentCreate, TextBlogContentCreate, VideoBlogContentCreate } from '@project/libs/app/types';
 
-export class Tag {
-  @IsString()
-  @IsNotEmpty()
-  @MinLength(3)
-  @MaxLength(10)
-  @Matches(/^[a-zA-Zа-яА-Я][a-zA-Z0-9_#]{2,9}$/, {
-    message: 'Name must start with a letter and can only contain letters, numbers, underscores and pound.',
-  })
-  tag: string;
-}
-
 export class UpdateBlogDto {
   @IsEnum(BlogType)
   type: BlogType;

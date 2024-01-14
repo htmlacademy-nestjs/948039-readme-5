@@ -49,4 +49,7 @@ export class BlogRdo {
 
   @Expose()
   public repostId?: string;
+
+  @Expose()
+  public repostUserId?: string;
 }

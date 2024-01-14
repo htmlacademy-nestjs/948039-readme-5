@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { BasePostgresRepository } from '@project/core';
 import { BlogEntity } from './blog.entity';
 import { Blog, BlogStatus, BlogType } from '@project/libs/app/types';
@@ -151,5 +151,40 @@ export class BlogRepository extends BasePostgresRepository<BlogEntity, Blog> {
     });
 
     return null;
+  }
+
+  public async repostById(userId: string, blog: BlogEntity): Promise<BlogEntity> {
+    const existRepostedBlog = await this.client.blog.findFirst({
+      where: {
+        userId,
+        repostId: blog.id
+      }
+    });
+    if (existRepostedBlog) {
+      throw new BadRequestException();
+    }
+
+    const {content, id: blogId, ...data } = blog.toPlainObject();
+    const newBlog = await this.client.blog.create({
+      data: {
+      ...data,
+      createdDate: new Date(),
+      postedDate: new Date(),
+      userId,
+      repost: true,
+      repostId: blogId,
+      repostUserId: data.userId,
+      }
+    });
+    const {id, ...contentData} = blog.content;
+    const baseBlogContentEntity = baseBlogEntityFactory(blog.type, {...contentData, blogId: newBlog.id});
+    const newContent = await this.baseBlogContentService.save(blog.type, baseBlogContentEntity);
+    const repostBlogEntity = new BlogEntity({
+      ...newBlog,
+      content: newContent,
+      type: newBlog.type as BlogType,
+      status: newBlog.status as BlogStatus
+    })
+    return repostBlogEntity;
   }
 }

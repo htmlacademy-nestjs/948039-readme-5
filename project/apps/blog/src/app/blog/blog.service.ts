@@ -1,8 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { BlogRepository } from './blog.repository';
 import { CreateBlogDto } from './dto/create-blog.dto';
 import { BlogEntity } from './blog.entity';
-import { UpdateBlogDto } from './dto/update-blog.tdo';
+import { UpdateBlogDto } from './dto/update-blog.dto';
 import { NOT_FOUND_BLOG } from './constants';
 import { BlogQuery } from './query/blog-query';
 import { fillDto } from '@project/libs/helpers';
@@ -51,5 +51,18 @@ export class BlogService {
       throw new NotFoundException(NOT_FOUND_BLOG);
     }
     return await this.blogRepository.deleteById(id);
+  }
+
+  public async repostById(id: string, userId: string) {
+    const existBlog = await this.blogRepository.findById(id);
+    if (!existBlog) {
+      throw new NotFoundException(NOT_FOUND_BLOG);
+    }
+    if (existBlog.userId === userId) {
+      throw new BadRequestException();
+    }
+
+    const blog = await this.blogRepository.repostById(userId, existBlog);
+    return fillDto(BlogRdo, blog);
   }
 }
