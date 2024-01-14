@@ -78,7 +78,8 @@ export class BlogRepository extends BasePostgresRepository<BlogEntity, Blog> {
       });
       return { ...blogEntity.toPlainObject(), likes: likes.length ?? 0, comments: comments.length ?? 0 };
     })
-    return {data: blogWithExtraData, pagination: {currentPage: page , itemsPerPage: pageSize, totalItems, totalPages }};
+    const data = {data: blogWithExtraData, pagination: {currentPage: page , itemsPerPage: pageSize, totalItems, totalPages }};
+    return data;
   }
 
   public async findById(id: string): Promise<BlogEntity> {

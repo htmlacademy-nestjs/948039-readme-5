@@ -16,3 +16,5 @@ export * from './lib/sort-direction.iterface';
 export * from './lib/sort-type.iterface';
 
 export * from './lib/like.interface';
+
+export * from './lib/comment.interface';
