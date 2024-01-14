@@ -21,7 +21,7 @@ Content-Type: application/json
 {
   "type": "text",
   "content": {
-    "name": "Cute cats and some more symbols for validate",
+    "name": "Cute cats and some more symbols for validate2",
     "annotation": "Длина текста должна быть 50 символов как минимум, так что будем растягивать как можем",
     "content": "Длина текста должна быть 50 символов как минимум, так что будем растягивать как можем.И еще разок. Длина текста должна быть 50 символов как минимум, так что будем растягивать как можем"
   },
@@ -50,11 +50,11 @@ PUT http://localhost:3000/api/blog/6d308040-96a2-4162-bea6-2338e9976540 HTTP/1.1
 Content-Type: application/json
 
 {
-  "status": "draft",
+  "status": "public",
   "type": "quote",
   "content": {
-    "quote": "new quote",
-    "author": "I am"
+    "quote": "new quote 20 symols or more",
+    "author": "I am wilgelm shaqspir"
   },
   "tags": ["new", "the_best"]
 }

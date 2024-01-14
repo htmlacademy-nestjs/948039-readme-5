@@ -34,7 +34,8 @@ export interface BlogSorting {
 }
 
 export interface BlogFilter {
-  type?: BlogType
+  type?: BlogType,
+  search?: string
 }
 
 export function blogFilter(filter: BlogFilter): Prisma.BlogWhereInput | undefined {
@@ -44,8 +45,15 @@ export function blogFilter(filter: BlogFilter): Prisma.BlogWhereInput | undefine
 
   let prismaFilter: Prisma.BlogWhereInput = {};
 
+  if (filter.search) {
+    prismaFilter.OR = [
+      {videoBlog: {name: {contains: filter.search}}},
+      {textBlog: {name: {contains: filter.search}}},
+    ];
+  }
+
   if (filter.type) {
-    prismaFilter = { type: filter.type };
+    prismaFilter.type = filter.type;
   }
 
   return prismaFilter;
