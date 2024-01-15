@@ -1,4 +1,4 @@
-import { BlogType, SortDirection, SortType } from '@project/libs/app/types';
+import { BlogStatus, BlogType, SortDirection, SortType } from '@project/libs/app/types';
 import { VideoBlogEntity } from './video-blog-content/video-blog.entity';
 import { LinkBlogEntity } from './link-blog-content/link-blog.entity';
 import { PhotoBlogEntity } from './photo-blog-content/photo-blog.entity';
@@ -44,7 +44,9 @@ export function blogFilter(filter: BlogFilter): Prisma.BlogWhereInput | undefine
     return undefined;
   }
 
-  let prismaFilter: Prisma.BlogWhereInput = {};
+  let prismaFilter: Prisma.BlogWhereInput = {
+    status: BlogStatus.Public
+  };
 
   if (filter.tag) {
     prismaFilter.tags = {
