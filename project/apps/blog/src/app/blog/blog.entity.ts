@@ -11,6 +11,7 @@ export class BlogEntity implements Blog {
   public tags?: string[];
   public repost?: boolean;
   public repostId?: string;
+  public repostUserId?: string;
 
   constructor(blog: Blog) {
     this.populate(blog);
@@ -26,6 +27,7 @@ export class BlogEntity implements Blog {
       postedDate: this.postedDate,
       repost: this.repost,
       repostId: this.repostId,
+      repostUserId: this.repostUserId,
       status: this.status,
       tags: this.tags,
       content: this.content
@@ -40,16 +42,10 @@ export class BlogEntity implements Blog {
     this.postedDate = data.postedDate;
     this.repost = data.repost;
     this.repostId = data.repostId;
+    this.repostUserId = data.repostUserId;
     this.status = data.status;
     this.tags = data.tags;
     this.content = data.content;
-  }
-
-  public repostBlog(data: {repostId: string}) {
-    this.repost = true;
-    this.createdDate = new Date();
-    this.postedDate = new Date();
-    this.repostId = data.repostId;
   }
 
   static fromObject(data: Blog): BlogEntity {

@@ -71,7 +71,7 @@ Content-Type: application/json
 ###
 
 # Delete blog by id
-DELETE http://localhost:3000/api/blog/4230172b-2a8c-4a7e-bda8-571974ac499e HTTP/1.1
+DELETE http://localhost:3000/api/blog/f871b79e-1fc7-4210-8225-fa7ec3f2eb5d HTTP/1.1
 Content-Type: application/json
 
 ###

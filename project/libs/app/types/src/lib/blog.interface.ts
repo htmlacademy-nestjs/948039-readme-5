@@ -12,5 +12,6 @@ export interface Blog {
   tags?: string[];
   repost?: boolean;
   repostId?: string;
+  repostUserId?: string;
   content: BlogContent;
 }

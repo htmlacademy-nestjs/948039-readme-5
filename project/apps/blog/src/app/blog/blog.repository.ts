@@ -164,27 +164,18 @@ export class BlogRepository extends BasePostgresRepository<BlogEntity, Blog> {
       throw new BadRequestException();
     }
 
-    const {content, id: blogId, ...data } = blog.toPlainObject();
-    const newBlog = await this.client.blog.create({
-      data: {
+    const {content: {id: contentId, ...contentWithoutId}, id, ...data } = blog.toPlainObject();
+    const newBlogEntity = new BlogEntity({
       ...data,
+      content: contentWithoutId,
       createdDate: new Date(),
       postedDate: new Date(),
       userId,
       repost: true,
-      repostId: blogId,
+      repostId: id,
       repostUserId: data.userId,
-      }
     });
-    const {id, ...contentData} = blog.content;
-    const baseBlogContentEntity = baseBlogEntityFactory(blog.type, {...contentData, blogId: newBlog.id});
-    const newContent = await this.baseBlogContentService.save(blog.type, baseBlogContentEntity);
-    const repostBlogEntity = new BlogEntity({
-      ...newBlog,
-      content: newContent,
-      type: newBlog.type as BlogType,
-      status: newBlog.status as BlogStatus
-    })
+    const repostBlogEntity = await this.save(newBlogEntity);
     return repostBlogEntity;
   }
 }
