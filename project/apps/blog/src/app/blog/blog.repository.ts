@@ -21,18 +21,20 @@ export class BlogRepository extends BasePostgresRepository<BlogEntity, Blog> {
 
   public async save(entity: BlogEntity): Promise<BlogEntity> {
     const {content, ... data } = entity.toPlainObject();
-    const newBlog = await this.client.blog.create({
-      data
-    });
-    const baseBlogContentEntity = baseBlogEntityFactory(entity.type, {...entity.content, blogId: newBlog.id});
-    const newContent = await this.baseBlogContentService.save(entity.type, baseBlogContentEntity);
-    const blogEntity = new BlogEntity({
-      ...newBlog,
-      content: newContent,
-      type: newBlog.type as BlogType,
-      status: newBlog.status as BlogStatus
+    const transactionResult = await this.client.$transaction(async (prisma) => {
+      const newBlog = await this.client.blog.create({
+        data
+      });
+      const baseBlogContentEntity = baseBlogEntityFactory(entity.type, {...entity.content, blogId: newBlog.id});
+      const newContent = await this.baseBlogContentService.save(entity.type, baseBlogContentEntity);
+      return new BlogEntity({
+        ...newBlog,
+        content: newContent,
+        type: newBlog.type as BlogType,
+        status: newBlog.status as BlogStatus
+      })
     })
-    return blogEntity;
+    return transactionResult;
   }
 
   public async find(param: BlogQuery): Promise<BlogPostWithPaginationRdo> {
