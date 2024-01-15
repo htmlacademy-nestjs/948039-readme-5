@@ -14,7 +14,7 @@ function getPosts() {
     {
       id: FIRST_POST_UUID,
       type: 'video',
-      status: 'draft',
+      status: 'public',
       userId: FIRST_USER_ID,
       videoBlog: {
         name: 'Mark Riman',
@@ -24,7 +24,7 @@ function getPosts() {
     {
       id: SECOND_POST_UUID,
       type: 'link',
-      status: 'draft',
+      status: 'public',
       userId: FIRST_USER_ID,
       linkBlog: {
         link: 'https://www.youtube.com/watch?v=zoq0tAKpLBI'
@@ -33,7 +33,7 @@ function getPosts() {
     {
       id: THIRD_POST_UUID,
       type: 'photo',
-      status: 'draft',
+      status: 'public',
       userId: FIRST_USER_ID,
       photoBlog: {
         path: 'https://clck.ru/37PzZS',
@@ -43,7 +43,7 @@ function getPosts() {
     {
       id: FOURTH_POST_UUID,
       type: 'text',
-      status: 'draft',
+      status: 'public',
       userId: SECOND_USER_ID,
       comments: [
         {
@@ -64,7 +64,7 @@ function getPosts() {
     {
       id: FIFTH_POST_UUID,
       type: 'quote',
-      status: 'draft',
+      status: 'public',
       userId: SECOND_USER_ID,
       quoteBlog: {
         quote: 'Без труда не вытянуть и рыбку из пруда',
