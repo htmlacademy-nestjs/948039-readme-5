@@ -13,20 +13,25 @@ export class BlogQuery {
   @IsString()
   public search?: string;
 
+  @Transform(({ value }) => value.toLowerCase())
+  @IsOptional()
+  @IsString()
+  public tag?: string;
+
   @IsIn(Object.values(SortType))
   @IsOptional()
-  public sort: SortType = DEFAULT_SORT;
+  public sort?: SortType = DEFAULT_SORT;
 
   @IsIn(Object.values(SortDirection))
   @IsOptional()
-  public direction: SortDirection = DEFAULT_SORT_DIRECTION;
+  public direction?: SortDirection = DEFAULT_SORT_DIRECTION;
 
   @Transform(({ value }) => +value || DEFAULT_PAGE_COUNT)
   @IsOptional()
-  public page: number = DEFAULT_PAGE_COUNT;
+  public page?: number = DEFAULT_PAGE_COUNT;
 
   @Transform(({ value }) => +value || DEFAULT_POST_COUNT_LIMIT)
   @IsNumber()
   @IsOptional()
-  public pageSize = DEFAULT_POST_COUNT_LIMIT;
+  public pageSize?: number = DEFAULT_POST_COUNT_LIMIT;
 }

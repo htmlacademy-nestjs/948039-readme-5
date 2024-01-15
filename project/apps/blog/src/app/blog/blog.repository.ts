@@ -36,8 +36,8 @@ export class BlogRepository extends BasePostgresRepository<BlogEntity, Blog> {
   }
 
   public async find(param: BlogQuery): Promise<BlogPostWithPaginationRdo> {
-    const {type, page, pageSize, sort, direction, search} = param;
-    const filter = blogFilter({type, search});
+    const {type, page, pageSize, sort, direction, search, tag} = param;
+    const filter = blogFilter({type, search, tag});
     const orderBy = blogSort({sort, direction});
     const skip = (page - 1) * pageSize;
     const totalItems = await this.client.blog.count({
