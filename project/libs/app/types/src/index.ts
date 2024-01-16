@@ -2,6 +2,9 @@ export * from './lib/user.interface';
 export * from './lib/auth-user.interface';
 export * from './lib/extend-user.interface';
 
+export * from './lib/token-payload.interface';
+export * from './lib/token.interface';
+
 export * from './lib/text-blog-content.interface';
 export * from './lib/video-blog-content.interface';
 export * from './lib/quote-blog-content.interface';

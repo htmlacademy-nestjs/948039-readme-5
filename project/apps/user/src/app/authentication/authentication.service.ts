@@ -1,4 +1,4 @@
-import { ConflictException, Inject, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { ConflictException, HttpException, HttpStatus, Inject, Injectable, Logger, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { BlogUserRepository } from '../blog-user/blog-user.repository';
 import { CreateUserDto } from './dto/create-user.dto';
 import { AUTH_USER_EXISTS, AUTH_USER_NOT_FOUND, AUTH_USER_PASSWROD_WRONG } from './authentication.constants';
@@ -7,14 +7,21 @@ import { LoginUserDto } from './dto/login-user.dto';
 import { ChangePasswordDto } from './dto/change-password.dto';
 import mongoConfig from 'libs/config/user/src/lib/mongo.config';
 import { ConfigType } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
+import { Token, TokenPayload, User } from '@project/libs/app/types';
 
 @Injectable()
 export class AuthenticationService {
+  private readonly logger = new Logger(AuthenticationService.name);
+
   constructor(
     private readonly blogUserRepository: BlogUserRepository,
-    @Inject(mongoConfig.KEY)
-    private readonly databaseConfig: ConfigType<typeof mongoConfig>
-  ) { }
+    private readonly jwtService: JwtService
+    // @Inject(mongoConfig.KEY)
+    // private readonly databaseConfig: ConfigType<typeof mongoConfig>
+  ) {
+
+  }
 
   public async register(dto: CreateUserDto) {
     const {email, avatar, name, password} = dto;
@@ -65,5 +72,21 @@ export class AuthenticationService {
     }
     await userEntity.setPassword(newPassword)
     return this.blogUserRepository.update(userEntity.id, userEntity);
+  }
+
+  public async createUserToken(user: User): Promise<Token> {
+    const payload: TokenPayload = {
+      sub: user.id,
+      email: user.email,
+      name: user.name,
+    };
+
+    try {
+      const accessToken = await this.jwtService.signAsync(payload);
+      return { accessToken };
+    } catch (error) {
+      this.logger.error('[Token generation error]: ' + error.message);
+      throw new HttpException('Ошибка при создании токена.', HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 }
