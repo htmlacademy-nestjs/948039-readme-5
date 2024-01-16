@@ -1,7 +1,7 @@
 import { Body, Controller, Post, Put } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import {fillDto} from '@project/libs/helpers';
+import { fillDto } from '@project/libs/helpers';
 import { UserRdo } from './rdo/user.rdo';
 import { LoginUserDto } from './dto/login-user.dto';
 import { LoggedUserRdo } from './rdo/logged-user.rdo';

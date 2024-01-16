@@ -3,3 +3,5 @@ export * from './lib/repositiry/entity.interface';
 export * from './lib/repositiry/base-memory.repository';
 export * from './lib/repositiry/base-mongo.repository';
 export * from './lib/repositiry/base-postgres.repository';
+
+export * from './lib/pipes/mongo-id-validation.pipe'

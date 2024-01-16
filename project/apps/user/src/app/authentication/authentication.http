@@ -16,7 +16,7 @@ Content-Type: application/json
 
 {
   "email": "user@notfound.local",
-  "password": "1234567"
+  "password": "123456"
 }
 
 ###
@@ -27,8 +27,8 @@ Content-Type: application/json
 
 {
   "id": "6581d3e18246015bf9aeb53d",
-  "oldPassword": "123456",
-  "newPassword": "1234567"
+  "oldPassword": "1234566",
+  "newPassword": "123456"
 }
 
 ###
