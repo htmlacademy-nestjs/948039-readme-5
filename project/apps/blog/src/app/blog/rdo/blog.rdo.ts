@@ -6,19 +6,24 @@ export class BlogRdo {
   public type: BlogType;
 
   @Expose()
-  @Type(() => Object, {
-    keepDiscriminatorProperty: true,
-    discriminator: {
-        property: "type",
-        subTypes: [
-            { value: VideoBlogContent, name: BlogType.Video },
-            { value: TextBlogContent, name: BlogType.Text },
-            { value: LinkBlogContent, name: BlogType.Link },
-            { value: PhotoBlogContent, name: BlogType.Photo },
-            { value: QuoteBlogContent, name: BlogType.Quote },
-        ]
+  @Type((opts) => {
+    const type = opts.object.type;
+    if(type === BlogType.Video) {
+      return VideoBlogContent
     }
-  })
+    if(type === BlogType.Text) {
+      return TextBlogContent
+    }
+    if(type === BlogType.Link) {
+      return LinkBlogContent
+    }
+    if(type === BlogType.Photo) {
+      return PhotoBlogContent
+    }
+    if(type === BlogType.Quote) {
+      return QuoteBlogContent
+    }
+  } )
   public content: BlogContent;
 
   @Expose()
@@ -34,7 +39,7 @@ export class BlogRdo {
   public status: BlogStatus;
 
   @Expose()
-  public author: string;
+  public userId: string;
 
   @Expose()
   public tags: string[];
@@ -44,4 +49,7 @@ export class BlogRdo {
 
   @Expose()
   public repostId?: string;
+
+  @Expose()
+  public repostUserId?: string;
 }

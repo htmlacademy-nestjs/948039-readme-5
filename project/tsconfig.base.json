@@ -18,6 +18,7 @@
       "@project/core": ["libs/core/src/index.ts"],
       "@project/libs/app/types": ["libs/app/types/src/index.ts"],
       "@project/libs/blog/models": ["libs/blog/models/src/index.ts"],
+      "@project/libs/config/files": ["libs/config/files/src/index.ts"],
       "@project/libs/config/user": ["libs/config/user/src/index.ts"],
       "@project/libs/helpers": ["libs/helpers/src/index.ts"]
     }

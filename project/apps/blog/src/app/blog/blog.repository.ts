@@ -1,10 +1,14 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { BasePostgresRepository } from '@project/core';
 import { BlogEntity } from './blog.entity';
-import { Blog, BlogStatus, BlogWithCommentsLikes } from '@project/libs/app/types';
+import { Blog, BlogStatus, BlogType } from '@project/libs/app/types';
 import { PrismaClientService } from '@project/libs/blog/models';
 import { BaseBlogContentService } from './base-blog/base-blog.service';
 import { baseBlogEntityFactory } from './base-blog/base-blog.factory';
+import { blogFilter, blogSort } from './utils';
+import { BlogPostWithPaginationRdo } from './rdo/blogs.rdo';
+import { BlogQuery } from './query/blog-query';
+import { BlogItemRdo } from './rdo/blog-item.rdo';
 
 @Injectable()
 export class BlogRepository extends BasePostgresRepository<BlogEntity, Blog> {
@@ -17,18 +21,32 @@ export class BlogRepository extends BasePostgresRepository<BlogEntity, Blog> {
 
   public async save(entity: BlogEntity): Promise<BlogEntity> {
     const {content, ... data } = entity.toPlainObject();
-    const record = await this.client.blog.create({
-      data
-    });
-    const baseBlogContentEntity = baseBlogEntityFactory(entity.type, {...entity.content, blogId: record.id});
-    const detail = await this.baseBlogContentService.save(entity.type, baseBlogContentEntity);
-    entity.id = record.id;
-    entity.content = detail;
-    return entity;
+    const transactionResult = await this.client.$transaction(async (prisma) => {
+      const newBlog = await this.client.blog.create({
+        data
+      });
+      const baseBlogContentEntity = baseBlogEntityFactory(entity.type, {...entity.content, blogId: newBlog.id});
+      const newContent = await this.baseBlogContentService.save(entity.type, baseBlogContentEntity);
+      return new BlogEntity({
+        ...newBlog,
+        content: newContent,
+        type: newBlog.type as BlogType,
+        status: newBlog.status as BlogStatus
+      })
+    })
+    return transactionResult;
   }
 
-  public async find(): Promise<BlogWithCommentsLikes[]> {
-    const record = await this.client.blog.findMany({
+  public async find(param: BlogQuery): Promise<BlogPostWithPaginationRdo> {
+    const {type, page, pageSize, sort, direction, search, tag} = param;
+    const filter = blogFilter({type, search, tag});
+    const orderBy = blogSort({sort, direction});
+    const skip = (page - 1) * pageSize;
+    const totalItems = await this.client.blog.count({
+      where: filter
+    });
+    const totalPages = Math.ceil(totalItems / pageSize);
+    const blogs = await this.client.blog.findMany({
       include: {
         textBlog: true,
         quoteBlog: true,
@@ -38,10 +56,14 @@ export class BlogRepository extends BasePostgresRepository<BlogEntity, Blog> {
         comments: true,
         likes: true,
       },
+      where: filter,
+      orderBy,
+      skip,
+      take: pageSize,
     });
 
-    const records = record.map(i => {
-      const {videoBlog, photoBlog, quoteBlog, comments, likes, textBlog, linkBlog, ...entity} = i;
+    const blogWithExtraData: BlogItemRdo[] = blogs.map(blog => {
+      const {videoBlog, photoBlog, quoteBlog, comments, likes, textBlog, linkBlog, ...entity} = blog;
       const MAP = {
         video: videoBlog,
         text: textBlog,
@@ -49,15 +71,21 @@ export class BlogRepository extends BasePostgresRepository<BlogEntity, Blog> {
         quote: quoteBlog,
         photo: photoBlog
       } as const;
-      const newItem = {...entity, content: MAP[i.type], likes: likes.length ?? 0, comments: comments.length ?? 0 };
-      return newItem;
-    })
 
-    return records as BlogWithCommentsLikes[];
+      const blogEntity = new BlogEntity({
+        ...entity,
+        content: MAP[blog.type],
+        type: entity.type as BlogType,
+        status: entity.status as BlogStatus
+      });
+      return { ...blogEntity.toPlainObject(), likes: likes.length ?? 0, comments: comments.length ?? 0 };
+    })
+    const data = {data: blogWithExtraData, pagination: {currentPage: page , itemsPerPage: pageSize, totalItems, totalPages }};
+    return data;
   }
 
   public async findById(id: string): Promise<BlogEntity> {
-    const record = await this.client.blog.findUnique({
+    const blog = await this.client.blog.findUnique({
       where: {id},
       include: {
         textBlog: true,
@@ -70,7 +98,7 @@ export class BlogRepository extends BasePostgresRepository<BlogEntity, Blog> {
       },
     });
 
-    const {videoBlog, photoBlog, quoteBlog, comments, likes, textBlog, linkBlog, ...entity} = record;
+    const {videoBlog, photoBlog, quoteBlog, comments, likes, textBlog, linkBlog, ...entity} = blog;
     const MAP = {
       video: videoBlog,
       text: textBlog,
@@ -79,10 +107,13 @@ export class BlogRepository extends BasePostgresRepository<BlogEntity, Blog> {
       photo: photoBlog
     } as const;
 
-    const newItem = {...record, content: MAP[record.type] };
-    const entitys = new BlogEntity(newItem as any);
-
-    return entitys;
+    const blogEntity = new BlogEntity({
+      ...entity,
+      content: MAP[blog.type],
+      type: entity.type as BlogType,
+      status: entity.status as BlogStatus
+    });
+    return blogEntity;
   }
 
   public async updateById(id: string, entity: BlogEntity, newBlogEntity: BlogEntity): Promise<BlogEntity> {
@@ -122,5 +153,31 @@ export class BlogRepository extends BasePostgresRepository<BlogEntity, Blog> {
     });
 
     return null;
+  }
+
+  public async repostById(userId: string, blog: BlogEntity): Promise<BlogEntity> {
+    const existRepostedBlog = await this.client.blog.findFirst({
+      where: {
+        userId,
+        repostId: blog.id
+      }
+    });
+    if (existRepostedBlog) {
+      throw new BadRequestException();
+    }
+
+    const {content: {id: contentId, ...contentWithoutId}, id, ...data } = blog.toPlainObject();
+    const newBlogEntity = new BlogEntity({
+      ...data,
+      content: contentWithoutId,
+      createdDate: new Date(),
+      postedDate: new Date(),
+      userId,
+      repost: true,
+      repostId: id,
+      repostUserId: data.userId,
+    });
+    const repostBlogEntity = await this.save(newBlogEntity);
+    return repostBlogEntity;
   }
 }

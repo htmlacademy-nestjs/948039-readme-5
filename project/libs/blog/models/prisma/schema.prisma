@@ -16,12 +16,12 @@ model Blog {
   type         String
   createdDate  DateTime   @default(now()) @map("created_date")
   postedDate   DateTime   @updatedAt @map("posted_date")
-  status       String?    @default("draft")
-  author       String
+  status       String?    @default("public")
+  userId       String     @map("user_id")
   tags         String[]
   repost       Boolean    @default(false)
   repostId     String?    @map("repost_id")
-  repostAuthor String?    @map("repost_author")
+  repostUserId String?    @map("repost_user_id")
   comments     Comment[]
   likes        Like[]
   photoBlog    PhotoBlog?

@@ -1,5 +1,6 @@
-import { Expose } from 'class-transformer';
+import { Expose, Transform } from 'class-transformer';
 export class LoggedUserRdo {
+  @Transform((query) => query.obj['id'])
   @Expose()
   public id: string;
 

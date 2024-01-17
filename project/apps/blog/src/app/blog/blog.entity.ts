@@ -7,10 +7,11 @@ export class BlogEntity implements Blog {
   public createdDate?: Date;
   public postedDate?: Date;
   public status?: BlogStatus;
-  public author: string;
+  public userId: string;
   public tags?: string[];
   public repost?: boolean;
   public repostId?: string;
+  public repostUserId?: string;
 
   constructor(blog: Blog) {
     this.populate(blog);
@@ -21,11 +22,12 @@ export class BlogEntity implements Blog {
     return {
       type: this.type,
       id: this.id,
-      author: this.author,
+      userId: this.userId,
       createdDate: this.createdDate,
       postedDate: this.postedDate,
       repost: this.repost,
       repostId: this.repostId,
+      repostUserId: this.repostUserId,
       status: this.status,
       tags: this.tags,
       content: this.content
@@ -35,21 +37,15 @@ export class BlogEntity implements Blog {
   public populate(data: Blog): void {
     this.type = data.type;
     this.id = data.id;
-    this.author = data.author;
+    this.userId = data.userId;
     this.createdDate = data.createdDate;
     this.postedDate = data.postedDate;
     this.repost = data.repost;
     this.repostId = data.repostId;
+    this.repostUserId = data.repostUserId;
     this.status = data.status;
     this.tags = data.tags;
     this.content = data.content;
-  }
-
-  public repostBlog(data: {repostId: string}) {
-    this.repost = true;
-    this.createdDate = new Date();
-    this.postedDate = new Date();
-    this.repostId = data.repostId;
   }
 
   static fromObject(data: Blog): BlogEntity {

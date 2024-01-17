@@ -2,6 +2,9 @@ export * from './lib/user.interface';
 export * from './lib/auth-user.interface';
 export * from './lib/extend-user.interface';
 
+export * from './lib/token-payload.interface';
+export * from './lib/token.interface';
+
 export * from './lib/text-blog-content.interface';
 export * from './lib/video-blog-content.interface';
 export * from './lib/quote-blog-content.interface';
@@ -12,5 +15,12 @@ export * from './lib/blog-status.enum';
 export * from './lib/blog-type.enum';
 export * from './lib/blog-content.interface';
 export * from './lib/blog-with-comments-likes.interface';
+export * from './lib/sort-direction.iterface';
+export * from './lib/sort-type.iterface';
+
+export * from './lib/file.interface';
+export * from './lib/stored-file.interface';
 
 export * from './lib/like.interface';
+
+export * from './lib/comment.interface';

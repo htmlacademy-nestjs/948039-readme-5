@@ -1,7 +1,6 @@
 import {Like} from '@project/libs/app/types'
 
 export class LikeEntity implements Like {
-  public id?: string;
   public blogId: string;
   public userId: string;
 
@@ -9,10 +8,8 @@ export class LikeEntity implements Like {
     this.populate(like);
   }
 
-
   public toPlainObject() {
     return {
-      id: this.id,
       blogId: this.blogId,
       userId: this.userId
     };
@@ -21,5 +18,9 @@ export class LikeEntity implements Like {
   public populate(data: Like): void {
     this.blogId = data.blogId;
     this.userId = data.userId;
+  }
+
+  static fromObject(data: Like): LikeEntity {
+    return new LikeEntity(data);
   }
 }

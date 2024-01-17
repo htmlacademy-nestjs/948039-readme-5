@@ -1,9 +1,13 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { BlogRepository } from './blog.repository';
 import { CreateBlogDto } from './dto/create-blog.dto';
 import { BlogEntity } from './blog.entity';
-import { UpdateBlogDto } from './dto/update-blog.tdo';
+import { UpdateBlogDto } from './dto/update-blog.dto';
 import { NOT_FOUND_BLOG } from './constants';
+import { BlogQuery } from './query/blog-query';
+import { fillDto } from '@project/libs/helpers';
+import { BlogRdo } from './rdo/blog.rdo';
+import { BlogPostWithPaginationRdo } from './rdo/blogs.rdo';
 
 @Injectable()
 export class BlogService {
@@ -13,11 +17,13 @@ export class BlogService {
 
   public async create(dto: CreateBlogDto) {
     const blogEntity = new BlogEntity(dto);
-    return await this.blogRepository.save(blogEntity);
+    const blog = await this.blogRepository.save(blogEntity);
+    return fillDto(BlogRdo, blog);
   }
 
-  public async find() {
-    return await this.blogRepository.find();
+  public async find(param: BlogQuery) {
+    const blogs = await this.blogRepository.find(param);
+    return fillDto(BlogPostWithPaginationRdo, blogs);
   }
 
   public async findById(id: string) {
@@ -25,7 +31,8 @@ export class BlogService {
     if (!existBlog) {
       throw new NotFoundException(NOT_FOUND_BLOG);
     }
-    return await this.blogRepository.findById(id);
+    const blog = await this.blogRepository.findById(id);
+    return fillDto(BlogRdo, blog);
   }
 
   public async updateById(id: string, dto: UpdateBlogDto) {
@@ -34,7 +41,8 @@ export class BlogService {
       throw new NotFoundException(NOT_FOUND_BLOG);
     }
     const newBlogEntity = new BlogEntity({...existBlog, ...dto});
-    return await this.blogRepository.updateById(id, existBlog, newBlogEntity);
+    const blog = await this.blogRepository.updateById(id, existBlog, newBlogEntity);
+    return fillDto(BlogRdo, blog);
   }
 
   public async deleteById(id: string) {
@@ -42,6 +50,19 @@ export class BlogService {
     if (!existBlog) {
       throw new NotFoundException(NOT_FOUND_BLOG);
     }
-    await this.blogRepository.deleteById(id);
+    return await this.blogRepository.deleteById(id);
+  }
+
+  public async repostById(id: string, userId: string) {
+    const existBlog = await this.blogRepository.findById(id);
+    if (!existBlog) {
+      throw new NotFoundException(NOT_FOUND_BLOG);
+    }
+    if (existBlog.userId === userId) {
+      throw new BadRequestException();
+    }
+
+    const blog = await this.blogRepository.repostById(userId, existBlog);
+    return fillDto(BlogRdo, blog);
   }
 }
