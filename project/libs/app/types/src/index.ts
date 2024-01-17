@@ -18,6 +18,9 @@ export * from './lib/blog-with-comments-likes.interface';
 export * from './lib/sort-direction.iterface';
 export * from './lib/sort-type.iterface';
 
+export * from './lib/file.interface';
+export * from './lib/stored-file.interface';
+
 export * from './lib/like.interface';
 
 export * from './lib/comment.interface';
