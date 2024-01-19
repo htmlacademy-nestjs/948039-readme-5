@@ -24,3 +24,5 @@ export * from './lib/stored-file.interface';
 export * from './lib/like.interface';
 
 export * from './lib/comment.interface';
+
+export * from './lib/subscriber.interface';
