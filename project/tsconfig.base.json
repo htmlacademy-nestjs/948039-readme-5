@@ -19,6 +19,7 @@
       "@project/libs/app/types": ["libs/app/types/src/index.ts"],
       "@project/libs/blog/models": ["libs/blog/models/src/index.ts"],
       "@project/libs/config/files": ["libs/config/files/src/index.ts"],
+      "@project/libs/config/notify": ["libs/config/notify/src/index.ts"],
       "@project/libs/config/user": ["libs/config/user/src/index.ts"],
       "@project/libs/helpers": ["libs/helpers/src/index.ts"]
     }
