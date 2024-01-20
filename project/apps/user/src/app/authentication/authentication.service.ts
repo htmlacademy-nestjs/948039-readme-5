@@ -1,12 +1,10 @@
-import { ConflictException, HttpException, HttpStatus, Inject, Injectable, Logger, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { ConflictException, HttpException, HttpStatus, Injectable, Logger, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { BlogUserRepository } from '../blog-user/blog-user.repository';
 import { CreateUserDto } from './dto/create-user.dto';
 import { AUTH_USER_EXISTS, AUTH_USER_NOT_FOUND, AUTH_USER_PASSWROD_WRONG } from './authentication.constants';
 import { BlogUserEntity } from '../blog-user/blog-user.entity';
 import { LoginUserDto } from './dto/login-user.dto';
 import { ChangePasswordDto } from './dto/change-password.dto';
-import mongoConfig from 'libs/config/user/src/lib/mongo.config';
-import { ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { Token, TokenPayload, User } from '@project/libs/app/types';
 
@@ -16,9 +14,7 @@ export class AuthenticationService {
 
   constructor(
     private readonly blogUserRepository: BlogUserRepository,
-    private readonly jwtService: JwtService
-    // @Inject(mongoConfig.KEY)
-    // private readonly databaseConfig: ConfigType<typeof mongoConfig>
+    private readonly jwtService: JwtService,
   ) {
 
   }
