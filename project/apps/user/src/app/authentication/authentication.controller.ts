@@ -7,15 +7,19 @@ import { LoginUserDto } from './dto/login-user.dto';
 import { LoggedUserRdo } from './rdo/logged-user.rdo';
 import { ChangePasswordDto } from './dto/change-password.dto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { NotifyService } from '../notify/notify.service';
 @Controller('auth')
 export class AuthenticationController {
   constructor(
-    public readonly authService: AuthenticationService
+    public readonly authService: AuthenticationService,
+    private readonly notifyService: NotifyService,
   ) {}
 
   @Post('register')
   public async create(@Body() dto: CreateUserDto) {
+    const { email, name } = dto;
     const newUser = await this.authService.register(dto);
+    await this.notifyService.registerSubscriber({ email, name });
     return fillDto(UserRdo, newUser.toPlainObject());
   }
 
