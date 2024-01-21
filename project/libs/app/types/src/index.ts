@@ -3,7 +3,7 @@ export * from './lib/auth-user.interface';
 export * from './lib/extend-user.interface';
 
 export * from './lib/token-payload.interface';
-export * from './lib/token.interface';
+export * from './lib/jwt-token.interface';
 
 export * from './lib/text-blog-content.interface';
 export * from './lib/video-blog-content.interface';
@@ -27,3 +27,8 @@ export * from './lib/comment.interface';
 
 export * from './lib/subscriber.interface';
 export * from './lib/rabbit-routing.enum';
+
+export * from './lib/token-payload.interface';
+export * from './lib/jwt-token.interface';
+export * from './lib/token.interface';
+export * from './lib/refresh-token-payload.interface';

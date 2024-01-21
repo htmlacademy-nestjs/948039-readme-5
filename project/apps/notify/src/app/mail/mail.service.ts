@@ -14,8 +14,6 @@ export class MailService {
   private readonly notifyConfig: ConfigType<typeof NotifyConfig>
 
   public async sendNotifyNewSubscriber(subscriber: Subscriber) {
-    console.log('111')
-
     await this.mailerService.sendMail({
       from: this.notifyConfig.mail.from,
       to: subscriber.email,
