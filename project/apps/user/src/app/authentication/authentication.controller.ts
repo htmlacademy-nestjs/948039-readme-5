@@ -11,6 +11,7 @@ import { LocalAuthGuard } from './guards/local-auth.guard';
 import { BlogUserEntity } from '../blog-user/blog-user.entity';
 import { JwtRefreshGuard } from './guards/jwt-refresh.guard';
 import { ApiResponse } from '@nestjs/swagger';
+import { RequestWithTokenPayload } from '@project/libs/app/types';
 
 interface RequestWithUser {
   user?: BlogUserEntity
@@ -54,5 +55,11 @@ export class AuthenticationController {
   })
   public async refreshToken(@Req() { user }: RequestWithUser) {
     return this.authService.createUserToken(user);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('check')
+  public async checkToken(@Req() { user: payload }: RequestWithTokenPayload) {
+    return payload;
   }
  }

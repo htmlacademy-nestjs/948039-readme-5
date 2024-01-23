@@ -1,5 +1,5 @@
 # Create a new user
-POST http://localhost:3000/api/auth/register HTTP/1.1
+POST http://localhost:3001/api/auth/register HTTP/1.1
 Content-Type: application/json
 
 {
@@ -11,7 +11,7 @@ Content-Type: application/json
 ###
 
 # Login user by email and password
-POST http://localhost:3000/api/auth/login HTTP/1.1
+POST http://localhost:3001/api/auth/login HTTP/1.1
 Content-Type: application/json
 
 {
@@ -22,7 +22,7 @@ Content-Type: application/json
 ###
 
 # Change user password
-PUT http://localhost:3000/api/auth/password HTTP/1.1
+PUT http://localhost:3001/api/auth/password HTTP/1.1
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTgxZDNlMTgyNDYwMTViZjlhZWI1M2QiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jYWwiLCJuYW1lIjoiSXZhbiBJdmFub3ZpY2giLCJpYXQiOjE3MDU4NjkwNjcsImV4cCI6MTcwNTg3MjY2N30.xKtWWVayUcrsuYbaBwgy5Qs0BcRtdrbvSB_yELJ7f1s
 
@@ -36,8 +36,14 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTgxZDNlM
 
 
 # refresh user token
-POST http://localhost:3000/api/auth/refresh HTTP/1.1
+POST http://localhost:3001/api/auth/refresh HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTgxZDNlMTgyNDYwMTViZjlhZWI1M2QiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jYWwiLCJuYW1lIjoiSXZhbiBJdmFub3ZpY2giLCJ0b2tlbklkIjoiNDk0NjlmNmQtNjcxMy00Njk1LTkzMjgtMjJjZDYzYmNhZTU1IiwiaWF0IjoxNzA1ODY5NTg0LCJleHAiOjE3MDU5NTU5ODR9.pX1u1ZLOw7AbAIJDv0sdpdQO-GMW6IPjXq2q4ochFpM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTgxZDNlMTgyNDYwMTViZjlhZWI1M2QiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jYWwiLCJuYW1lIjoiSXZhbiBJdmFub3ZpY2giLCJ0b2tlbklkIjoiNjg5YmVmYjgtNzJhYy00YTE4LWFiNjgtMzliZWNmN2M0MjYwIiwiaWF0IjoxNzA1OTE3MTg2LCJleHAiOjE3MDYwMDM1ODZ9.OKWxMdIoDMnp7pueyVI_un7NfFlq3SIwYLFeeuln2yE
+
+###
+
+# Check user token
+POST http://localhost:3001/api/auth/check HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDQwMzJmYmU0Y2FlYjg2OGM2ZWVjMzYiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jYWwiLCJyb2xlIjoidXNlciIsImxhc3RuYW1lIjoiU21pdGgiLCJmaXJzdG5hbWUiOiJLZWtzIiwiaWF0IjoxNjgzMTIxMzU1LCJleHAiOjE2ODMxMjE5NTV9.laK4-SAzu_ZMznRVsRWrHxELTGu_P48kpY_CwHPjxtk
 
 ###
