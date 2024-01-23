@@ -189,4 +189,12 @@ export class BlogRepository extends BasePostgresRepository<BlogEntity, Blog> {
     const repostBlogEntity = await this.save(newBlogEntity);
     return repostBlogEntity;
   }
+
+  public async findNew(date: Date): Promise<string[]> {
+    const blogs = await this.client.blog.findMany({
+      where: {createdDate: {gt: date}}
+    });
+    const newBlogId = blogs.map(blog => blog.id)
+    return newBlogId;
+  }
 }
