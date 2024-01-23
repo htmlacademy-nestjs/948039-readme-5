@@ -1,0 +1,62 @@
+# Create a new user
+POST http://localhost:3000/api/users/register HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "user@notfound.loc",
+  "name": "Ivan Ivanovich",
+  "password": "123456"
+}
+###
+
+# Login user by email and password
+POST http://localhost:3000/api/users/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "user@notfound.local",
+  "password": "123456"
+}
+
+###
+
+# Get new JWT pair
+POST http://localhost:3000/api/users/refresh HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTgxZDNlMTgyNDYwMTViZjlhZWI1M2QiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jYWwiLCJuYW1lIjoiSXZhbiBJdmFub3ZpY2giLCJpYXQiOjE3MDU5NTcwNjAsImV4cCI6MTcwNTk2MDY2MH0.KZPKyQVfAac1QT0whUEslEgsl_SFUHhbhGwGRM_QaLU
+
+###
+
+# Change user password
+PUT http://localhost:3000/api/users/password HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTgxZDNlMTgyNDYwMTViZjlhZWI1M2QiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jYWwiLCJuYW1lIjoiSXZhbiBJdmFub3ZpY2giLCJpYXQiOjE3MDYwMTU1NDksImV4cCI6MTcwNjAxOTE0OX0.jL17O8UcL328p4knAK1b8dSQSWX2ERXGGj-CzuaOOGs
+
+{
+  "oldPassword": "123456",
+  "newPassword": "123456"
+}
+
+###
+
+# Get user info
+GET http://localhost:3000/api/users/65afd5973b611cdae9fb90da HTTP/1.1
+Content-Type: application/json
+
+###
+
+# Create a new post
+POST http://localhost:3000/api/blog HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTgxZDNlMTgyNDYwMTViZjlhZWI1M2QiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jYWwiLCJuYW1lIjoiSXZhbiBJdmFub3ZpY2giLCJpYXQiOjE3MDYwMDY4NTgsImV4cCI6MTcwNjAxMDQ1OH0.-P5XqHERB_U8dHZ1dqcA51uG8OfB6RTo_6ADhRfZzBo
+Content-Type: application/json
+
+{
+  "type": "video",
+  "content": {
+    "name": "Длина которая больше 20",
+    "link": "https://www.youtube.com/watch?v=y0sF5xhGreA"
+  },
+  "userId": "65a248fa590fc5abaf0d89ea",
+  "tags": ["Thebest#"]
+}
+
+###

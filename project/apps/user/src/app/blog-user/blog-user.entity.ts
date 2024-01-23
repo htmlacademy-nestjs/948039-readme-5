@@ -8,7 +8,8 @@ export class BlogUserEntity implements AuthUser {
   public id?: string;
   public email: string;
   public name: string;
-  public avatar: string;
+  public avatarId: string;
+  public createdAt: Date;
 
   constructor(user: AuthUser) {
     this.populate(user);
@@ -20,16 +21,18 @@ export class BlogUserEntity implements AuthUser {
       id: this.id,
       email: this.email,
       name: this.name,
-      avatar: this.avatar,
+      avatarId: this.avatarId,
+      createdAt: this.createdAt
     };
   }
 
   public populate(data: AuthUser): void {
-    this.avatar = data.avatar;
+    this.avatarId = data.avatarId;
     this.email = data.email;
     this.name = data.name;
     this.id = data.id;
     this.passwordHash = data.passwordHash;
+    this.createdAt = data.cteatedAt ?? new Date();
   }
 
   public async setPassword(password: string): Promise<BlogUserEntity> {

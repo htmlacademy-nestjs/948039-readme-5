@@ -17,6 +17,7 @@ export class FileUploaderController {
   @Post('/upload')
   @UseInterceptors(FileInterceptor('file'))
   public async uploadFile(@UploadedFile() file: Express.Multer.File) {
+    console.log(123)
     const fileEntity = await this.fileUploaderService.saveFile(file);
     return fillDto(UploadedFileRdo, fileEntity.toPlainObject());
   }

@@ -27,7 +27,7 @@ export class AuthenticationService {
   }
 
   public async register(dto: CreateUserDto) {
-    const {email, avatar, name, password} = dto;
+    const {email, avatarId, name, password} = dto;
     const existUser = await this.blogUserRepository.findByEmail(email);
     if (existUser) {
       throw new ConflictException(AUTH_USER_EXISTS);
@@ -36,7 +36,7 @@ export class AuthenticationService {
     const blogUser = {
       email,
       name,
-      avatar: avatar ?? 'default-avatar.png',
+      avatarId,
       passwordHash: ''
     }
 

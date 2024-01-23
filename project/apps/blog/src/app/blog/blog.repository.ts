@@ -116,6 +116,15 @@ export class BlogRepository extends BasePostgresRepository<BlogEntity, Blog> {
     return blogEntity;
   }
 
+  public async findUserInfo(id: string): Promise<number> {
+    const blogCount = await this.client.blog.count({
+      where: {userId: id},
+    });
+
+
+    return blogCount;
+  }
+
   public async updateById(id: string, entity: BlogEntity, newBlogEntity: BlogEntity): Promise<BlogEntity> {
     const isChangeType = entity.type !== newBlogEntity.type;
     let updateBlogInfo: Record<string, unknown> = {

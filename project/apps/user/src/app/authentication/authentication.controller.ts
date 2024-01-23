@@ -24,6 +24,11 @@ export class AuthenticationController {
     private readonly notifyService: NotifyService,
   ) {}
 
+  @ApiResponse({
+    type: UserRdo,
+    status: HttpStatus.CREATED,
+    description: 'Регистрация пользователя'
+  })
   @Post('register')
   public async create(@Body() dto: CreateUserDto) {
     const { email, name } = dto;
@@ -33,6 +38,11 @@ export class AuthenticationController {
   }
 
   @UseGuards(LocalAuthGuard)
+  @ApiResponse({
+    type: LoggedUserRdo,
+    status: HttpStatus.CREATED,
+    description: 'Авторизация пользователя'
+  })
   @Post('login')
   public async login(@Req() { user }: RequestWithUser) {
     const userToken = await this.authService.createUserToken(user);
@@ -40,6 +50,10 @@ export class AuthenticationController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @ApiResponse({
+    status: HttpStatus.CREATED,
+    description: 'смена пароля авторизованным пользователем'
+  })
   @Put('password')
   public async changePassword(@Body() dto: ChangePasswordDto) {
     await this.authService.changePassword(dto);
@@ -51,13 +65,17 @@ export class AuthenticationController {
   @HttpCode(HttpStatus.OK)
   @ApiResponse({
     status: HttpStatus.OK,
-    description: 'Get a new access/refresh tokens'
+    description: 'Получить новый токен'
   })
   public async refreshToken(@Req() { user }: RequestWithUser) {
     return this.authService.createUserToken(user);
   }
 
   @UseGuards(JwtAuthGuard)
+  @ApiResponse({
+    status: HttpStatus.CREATED,
+    description: 'Проврека валидности токена'
+  })
   @Post('check')
   public async checkToken(@Req() { user: payload }: RequestWithTokenPayload) {
     return payload;
