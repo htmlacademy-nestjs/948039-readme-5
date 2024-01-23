@@ -41,9 +41,7 @@ export class UsersController {
 
   @Get(':id')
   public async getUserById(@Param('id') id: string) {
-    console.log(id)
     const {data: userInfo} = await this.httpService.axiosRef.get(`${ApplicationServiceURL.UsersInfo}/${id}`);
-
     const {data: blogCount} = await this.httpService.axiosRef.get(`${ApplicationServiceURL.Blog}/user/${id}`);
     return {...userInfo, blogCount};
   }

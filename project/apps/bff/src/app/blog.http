@@ -1,6 +1,6 @@
 # Create a new post
 POST http://localhost:3000/api/blog HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTgxZDNlMTgyNDYwMTViZjlhZWI1M2QiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jYWwiLCJuYW1lIjoiSXZhbiBJdmFub3ZpY2giLCJpYXQiOjE3MDYwMDY4NTgsImV4cCI6MTcwNjAxMDQ1OH0.-P5XqHERB_U8dHZ1dqcA51uG8OfB6RTo_6ADhRfZzBo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTgxZDNlMTgyNDYwMTViZjlhZWI1M2QiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jYWwiLCJuYW1lIjoiSXZhbiBJdmFub3ZpY2giLCJpYXQiOjE3MDYwMjcwMDMsImV4cCI6MTcwNjAzMDYwM30._4Q895QrkTMigjgGoTaNAtccqLYhVC_qwfspsRkJbJU
 Content-Type: application/json
 
 {
@@ -9,8 +9,83 @@ Content-Type: application/json
     "name": "Длина которая больше 20",
     "link": "https://www.youtube.com/watch?v=y0sF5xhGreA"
   },
-  "userId": "65a248fa590fc5abaf0d89ea",
   "tags": ["Thebest#"]
 }
+
+###
+
+# Get blogs
+GET http://localhost:3000/api/blog HTTP/1.1
+Content-Type: application/json
+
+###
+
+# Get blog by id
+GET http://localhost:3000/api/blog/b78089eb-d951-4fa8-90fa-38585a61b827 HTTP/1.1
+Content-Type: application/json
+
+###
+
+# Change blog info by id
+PUT http://localhost:3000/api/blog/383394bf-aad9-4485-baea-a35350038f41 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTgxZDNlMTgyNDYwMTViZjlhZWI1M2QiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jYWwiLCJuYW1lIjoiSXZhbiBJdmFub3ZpY2giLCJpYXQiOjE3MDYwMjcwMDMsImV4cCI6MTcwNjAzMDYwM30._4Q895QrkTMigjgGoTaNAtccqLYhVC_qwfspsRkJbJU
+Content-Type: application/json
+
+{
+  "status": "public",
+  "type": "quote",
+  "content": {
+    "quote": "new quote 20 symols or more",
+    "author": "I am wilgelm shaqspir"
+  },
+  "tags": ["new", "the_best"]
+}
+
+###
+
+
+# Repost blog by id
+Post http://localhost:3000/api/blog/repost/383394bf-aad9-4485-baea-a35350038f41 HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTgxZDNlMTgyNDYwMTViZjlhZWI1M2QiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jYWwiLCJuYW1lIjoiSXZhbiBJdmFub3ZpY2giLCJpYXQiOjE3MDYwMjcwMDMsImV4cCI6MTcwNjAzMDYwM30._4Q895QrkTMigjgGoTaNAtccqLYhVC_qwfspsRkJbJU
+
+
+###
+
+# Delete blog by id
+DELETE http://localhost:3000/api/blog/383394bf-aad9-4485-baea-a35350038f41 HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTgxZDNlMTgyNDYwMTViZjlhZWI1M2QiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jYWwiLCJuYW1lIjoiSXZhbiBJdmFub3ZpY2giLCJpYXQiOjE3MDYwMjcwMDMsImV4cCI6MTcwNjAzMDYwM30._4Q895QrkTMigjgGoTaNAtccqLYhVC_qwfspsRkJbJU
+
+###
+
+# set like for blogId
+PUT http://localhost:3000/api/blog/b78089eb-d951-4fa8-90fa-38585a61b827/like HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTgxZDNlMTgyNDYwMTViZjlhZWI1M2QiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jYWwiLCJuYW1lIjoiSXZhbiBJdmFub3ZpY2giLCJpYXQiOjE3MDYwMzA5ODUsImV4cCI6MTcwNjAzNDU4NX0.LnE_Kkjv6Uo-K-k-pH9WQRyKxFPAajXzy_LQrlt599A
+
+###
+
+# Create a new comment
+POST http://localhost:3000/api/blog/b78089eb-d951-4fa8-90fa-38585a61b827/comment HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTgxZDNlMTgyNDYwMTViZjlhZWI1M2QiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jYWwiLCJuYW1lIjoiSXZhbiBJdmFub3ZpY2giLCJpYXQiOjE3MDYwMzA5ODUsImV4cCI6MTcwNjAzNDU4NX0.LnE_Kkjv6Uo-K-k-pH9WQRyKxFPAajXzy_LQrlt599A
+
+{
+  "message": "Все круто! Жги! Твой контент вдохновляет"
+}
+
+###
+
+# Get comments for blogId
+GET http://localhost:3000/api/blog/b78089eb-d951-4fa8-90fa-38585a61b827/comment HTTP/1.1
+Content-Type: application/json
+
+###
+
+# Delete comment by id
+DELETE http://localhost:3000/api/blog/comment/e17b5a81-2ccf-4bfa-8bed-35bd823c1c63 HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTgxZDNlMTgyNDYwMTViZjlhZWI1M2QiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jYWwiLCJuYW1lIjoiSXZhbiBJdmFub3ZpY2giLCJpYXQiOjE3MDYwMzA5ODUsImV4cCI6MTcwNjAzNDU4NX0.LnE_Kkjv6Uo-K-k-pH9WQRyKxFPAajXzy_LQrlt599A
 
 ###
