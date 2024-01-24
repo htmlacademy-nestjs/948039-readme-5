@@ -4,7 +4,7 @@ import { IsMongoId, IsOptional } from 'class-validator';
 
 export class UserRdo {
   @Expose()
-  @Transform((query) => query.obj['_id'])
+  @Transform((query) => query.obj['id'])
   @ApiProperty({
     description: 'айди пользователя',
   })

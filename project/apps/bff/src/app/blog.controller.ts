@@ -35,12 +35,39 @@ export class BlogController {
     const { data } = await this.httpService.axiosRef.get(`${ApplicationServiceURL.Blog}/`, {
       params: query
     });
+    const users = data.data.map(data => data.userId);
+    const photos = data.data.filter(data => data.type === 'photo').map(data => data.content.photoId);
+    const detailPhotos = [];
+    for (let photoId of photos) {
+      const { data } = await this.httpService.axiosRef.get(`${ApplicationServiceURL.File}/${photoId}`);
+      detailPhotos.push(data);
+    }
+    const detailUsers = [];
+    for (let userId of users) {
+      const { data } = await this.httpService.axiosRef.get(`${ApplicationServiceURL.UsersInfo}/${userId}`);
+      detailUsers.push(data);
+    }
+    data.data.forEach((blog, idx, blogs) => {
+      if (blog.type === 'photo') {
+        const detailtPhotoContent = detailPhotos.find(detail => detail.id === blog.content.photoId)
+        blogs[idx].content.photoDetail = detailtPhotoContent;
+      }
+      const detailUserContent = detailUsers.find(detail => detail.id === blog.userId)
+      blogs[idx].userDetail = detailUserContent;
+    });
+
     return data;
   }
 
   @Get(':id')
   public async findById(@Param('id') id: string) {
     const { data } = await this.httpService.axiosRef.get(`${ApplicationServiceURL.Blog}/${id}`);
+    if (data.type === 'photo') {
+      const { data: detailtPhotoContent } = await this.httpService.axiosRef.get(`${ApplicationServiceURL.File}/${data.content.photoId}`);
+      data.content.photoDetail = detailtPhotoContent;
+    }
+    const { data: detailUserContent } = await this.httpService.axiosRef.get(`${ApplicationServiceURL.UsersInfo}/${data.userId}`);
+    data.userDetail = detailUserContent;
     return data;
   }
 
@@ -58,7 +85,9 @@ export class BlogController {
   @UseGuards(CheckAuthGuard)
   @UseInterceptors(UseridInterceptor)
   @Delete(':id')
-  public async deleteById(@Param('id') id: string) {
+  public async deleteById(
+    @Param('id') id: string
+    ) {
     const { data } = await this.httpService.axiosRef.delete(`${ApplicationServiceURL.Blog}/${id}`);
     return data;
   }

@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { BasePostgresRepository } from '@project/core';
 import { BlogEntity } from './blog.entity';
 import { Blog, BlogStatus, BlogType } from '@project/libs/app/types';
@@ -97,7 +97,9 @@ export class BlogRepository extends BasePostgresRepository<BlogEntity, Blog> {
         likes: true,
       },
     });
-
+    if (blog === null) {
+      throw new NotFoundException();
+    }
     const {videoBlog, photoBlog, quoteBlog, comments, likes, textBlog, linkBlog, ...entity} = blog;
     const MAP = {
       video: videoBlog,

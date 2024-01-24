@@ -32,7 +32,7 @@ Content-Type: application/json
 ###
 
 # Get blogs
-GET http://localhost:3002/api/blog HTTP/1.1
+GET http://localhost:3002/api/blog?type=photo HTTP/1.1
 Content-Type: application/json
 
 ###

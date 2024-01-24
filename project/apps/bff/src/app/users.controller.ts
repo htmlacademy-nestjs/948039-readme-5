@@ -5,7 +5,6 @@ import { LoginUserDto } from './dto/login-user.dto';
 import { AxiosExceptionFilter } from './filters/axios-exception.filter';
 import { CreateUserDto } from './dto/create-user.dto';
 import { ChangePasswordDto } from './dto/change-password.dto';
-import { UseridInterceptor } from './interceptors/userid.interceptor';
 import { CheckAuthGuard } from './guards/check-auth.guard';
 
 @Controller('users')
@@ -46,7 +45,6 @@ export class UsersController {
     return {...userInfo, blogCount};
   }
 
-  @UseGuards(CheckAuthGuard)
   @Post('refresh')
   public async refreshToken(@Req() req: Request) {
     const { data } = await this.httpService.axiosRef.post(`${ApplicationServiceURL.Users}/refresh`, null, {
