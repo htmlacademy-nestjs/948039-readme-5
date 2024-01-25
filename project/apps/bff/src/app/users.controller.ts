@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put, Req, UseFilters, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Get, Headers, NotAcceptableException, Param, Post, Put, Req, UseFilters, UseGuards, UseInterceptors } from '@nestjs/common';
 import { ApplicationServiceURL } from './app.config';
 import { HttpService } from '@nestjs/axios';
 import { LoginUserDto } from './dto/login-user.dto';
@@ -21,7 +21,14 @@ export class UsersController {
   }
 
   @Post('register')
-  public async register(@Body() createUserDto: CreateUserDto) {
+  public async register(
+    @Headers('authorization') auth: string | undefined,
+    @Body() createUserDto: CreateUserDto
+  ) {
+    if (auth) {
+      throw new NotAcceptableException()
+    }
+
     const { data } = await this.httpService.axiosRef.post(`${ApplicationServiceURL.Users}/register`, createUserDto);
     return data;
   }

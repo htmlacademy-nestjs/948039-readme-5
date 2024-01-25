@@ -26,6 +26,14 @@ export class CommentController {
     return comments;
   }
 
+  @Get('/info/:id')
+  public async findById(
+    @Param('id') commentId: string,
+    ) {
+    const comment = await this.commentService.findById(commentId);
+    return comment;
+  }
+
   @Delete(':id')
   public async delete(
     @Param('id') id: string,

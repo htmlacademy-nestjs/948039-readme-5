@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseFilters, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, NotAcceptableException, Param, Post, Put, Query, UseFilters, UseGuards, UseInterceptors } from '@nestjs/common';
 import { CheckAuthGuard } from './guards/check-auth.guard';
 import { AxiosExceptionFilter } from './filters/axios-exception.filter';
 import { CreateBlogDto } from './dto/add-new-post.dto';
@@ -16,7 +16,6 @@ import { CommentQuery } from './query/comment-query';
 @Controller('blog')
 @UseFilters(AxiosExceptionFilter)
 export class BlogController {
-
   constructor(
     private readonly httpService: HttpService,
   ) {}
@@ -28,7 +27,6 @@ export class BlogController {
     const { data } = await this.httpService.axiosRef.post(`${ApplicationServiceURL.Blog}/`, dto);
     return data;
   }
-
 
   @Get('')
   public async find(@Query() query: BlogQuery) {
@@ -86,12 +84,17 @@ export class BlogController {
   @UseInterceptors(UseridInterceptor)
   @Delete(':id')
   public async deleteById(
-    @Param('id') id: string
+    @Param('id') id: string,
+    @Body() body: {userId: string}
+
     ) {
+    const { data: blogInfo } = await this.httpService.axiosRef.get(`${ApplicationServiceURL.Blog}/${id}`);
+    if (body.userId !== blogInfo.userId) {
+      throw new NotAcceptableException();
+    }
     const { data } = await this.httpService.axiosRef.delete(`${ApplicationServiceURL.Blog}/${id}`);
     return data;
   }
-
 
   @UseGuards(CheckAuthGuard)
   @UseInterceptors(UseridInterceptor)
@@ -103,7 +106,6 @@ export class BlogController {
       const { data } = await this.httpService.axiosRef.post(`${ApplicationServiceURL.Blog}/repost/${id}`, dto);
       return data;
   }
-
 
   @UseGuards(CheckAuthGuard)
   @UseInterceptors(UseridInterceptor)
@@ -143,11 +145,13 @@ export class BlogController {
   @Delete('comment/:id')
   public async delete(
     @Param('id') id: string,
-    @Body() dto: DeleteCommentDto,
+    @Body() body: DeleteCommentDto,
     ) {
-      const { data } = await this.httpService.axiosRef.delete(`${ApplicationServiceURL.Comment}/${id}`, {
-        data: dto
-      } as any);
+      const { data: commentInfo } = await this.httpService.axiosRef.get(`${ApplicationServiceURL.Comment}/info/${id}`);
+      if (commentInfo.userId !== body.userId) {
+        throw new NotAcceptableException();
+      }
+      const { data } = await this.httpService.axiosRef.delete(`${ApplicationServiceURL.Comment}/${id}`);
       return data;
   }
 }

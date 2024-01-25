@@ -29,6 +29,12 @@ export class CommentService {
     return fillDto(CommentsWithPaginationRdo, comments);
   }
 
+  public async findById(commentId: string) {
+    const comment = await this.commentRepository.findById(commentId);
+    console.log(comment)
+    return fillDto(CommentRdo, comment);
+  }
+
   public async deleteById(id: string, userId: string) {
     const existComment = await this.commentRepository.findById(id);
     if (!existComment) {

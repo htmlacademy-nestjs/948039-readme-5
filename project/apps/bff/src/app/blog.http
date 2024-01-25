@@ -71,7 +71,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWIwZmMyN
 # Delete blog by id
 DELETE http://localhost:3000/api/blog/3ddbfaa4-33ba-4d73-93c9-99eb6ae1e5c9 HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWIwZmMyNGJmNTIyOTliYjJiZGM1ZGYiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jIiwibmFtZSI6Ikl2YW4gSXZhbm92aWNoIiwiaWF0IjoxNzA2MTI2MzcxLCJleHAiOjE3MDYxMjk5NzF9._DrGH49UMvwt3579N4flgpo1ceZI5fH_ex2_OZtyV4Q
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWIwZmMyNGJmNTIyOTliYjJiZGM1ZGYiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jIiwibmFtZSI6Ikl2YW4gSXZhbm92aWNoIiwiaWF0IjoxNzA2MjA4NTcyLCJleHAiOjE3MDYyMTIxNzJ9.eG_KuH0FERiGRAT93VLQozs1GInXgXz1JAUpmVkc2R4
 
 ###
 
@@ -100,8 +100,8 @@ Content-Type: application/json
 ###
 
 # Delete comment by id
-DELETE http://localhost:3000/api/blog/comment/4219171d-b9e6-43c5-8bba-6bf626465f34 HTTP/1.1
+DELETE http://localhost:3000/api/blog/comment/b75cf7bf-2dae-4b2a-a618-4f5c7e515c2c HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWIwZmMyNGJmNTIyOTliYjJiZGM1ZGYiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jIiwibmFtZSI6Ikl2YW4gSXZhbm92aWNoIiwiaWF0IjoxNzA2MTI2MzcxLCJleHAiOjE3MDYxMjk5NzF9._DrGH49UMvwt3579N4flgpo1ceZI5fH_ex2_OZtyV4Q
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWIwZmMyNGJmNTIyOTliYjJiZGM1ZGYiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jIiwibmFtZSI6Ikl2YW4gSXZhbm92aWNoIiwiaWF0IjoxNzA2MjEyMzc2LCJleHAiOjE3MDYyMTU5NzZ9.SpwHfx1RyX60fMwjBfnXdusASjqCq6Ou905X4FHEIvA
 
 ###
