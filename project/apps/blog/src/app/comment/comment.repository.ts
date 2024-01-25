@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { BasePostgresRepository } from '@project/core';
 import { PrismaClientService } from '@project/libs/blog/models';
 import { Comment } from '@project/libs/app/types';
@@ -29,6 +29,9 @@ export class CommentRepository extends BasePostgresRepository<CommentEntity, Com
         id
       }
     });
+    if (comment === null) {
+      throw new NotFoundException()
+    }
     const commentEntity = new CommentEntity(comment);
     return commentEntity;
   }

@@ -1,5 +1,5 @@
 # Create a new comment
-POST http://localhost:3000/api/comment HTTP/1.1
+POST http://localhost:3002/api/comment HTTP/1.1
 Content-Type: application/json
 
 {
@@ -11,13 +11,13 @@ Content-Type: application/json
 ###
 
 # Get comments for blogId
-GET http://localhost:3000/api/comment/02cc5820-d865-4092-929d-19d6d41aa849 HTTP/1.1
+GET http://localhost:3002/api/comment/02cc5820-d865-4092-929d-19d6d41aa849 HTTP/1.1
 Content-Type: application/json
 
 ###
 
 # Delete comment by id
-DELETE http://localhost:3000/api/comment/25fcc566-115b-4be1-a79a-b979ec410051 HTTP/1.1
+DELETE http://localhost:3002/api/comment/25fcc566-115b-4be1-a79a-b979ec410051 HTTP/1.1
 Content-Type: application/json
 
 {

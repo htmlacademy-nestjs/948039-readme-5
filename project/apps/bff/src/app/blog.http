@@ -1,0 +1,107 @@
+# Create a new post
+POST http://localhost:3000/api/blog HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWIwZmMyZGJmNTIyOTliYjJiZGM1ZTIiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jYWxlIiwibmFtZSI6Ikl2YW4gSXZhbm92aWNoIiwiaWF0IjoxNzA2MTI0OTUwLCJleHAiOjE3MDYxMjg1NTB9.Q7zKsH2PtsMS_npaCkO8R-262-_Gz3HJ7hDsYbDVRMw
+Content-Type: application/json
+
+{
+  "type": "video",
+  "content": {
+    "name": "Длина которая больше 20",
+    "link": "https://www.youtube.com/watch?v=y0sF5xhGreA"
+  },
+  "tags": ["Thebest#"]
+}
+
+###
+
+# Create a new photo post with photoId
+POST http://localhost:3000/api/blog HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWIwZmMyNGJmNTIyOTliYjJiZGM1ZGYiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jIiwibmFtZSI6Ikl2YW4gSXZhbm92aWNoIiwiaWF0IjoxNzA2MDk4MTg0LCJleHAiOjE3MDYxMDE3ODR9.av4q584LBncK7hw7Xq06LwYwJRb0NZ8O7Ci3J9jczQU
+Content-Type: application/json
+
+{
+  "type": "photo",
+  "content": {
+    "photoId": "65b0fd85423800a19e97f544",
+    "name": "The best photo avatar in the world"
+  },
+  "tags": ["photo#", "thebest#"]
+}
+
+###
+
+# Get blogs
+GET http://localhost:3000/api/blog?sort=createdDate&direction=asc HTTP/1.1
+Content-Type: application/json
+
+###
+
+# Get blog by id
+GET http://localhost:3000/api/blog/3ddbfaa4-33ba-4d73-93c9-99eb6ae1e5c9 HTTP/1.1
+Content-Type: application/json
+
+###
+
+# Change blog info by id
+PUT http://localhost:3000/api/blog/3ddbfaa4-33ba-4d73-93c9-99eb6ae1e5c9 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWIwZmMyZGJmNTIyOTliYjJiZGM1ZTIiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jYWxlIiwibmFtZSI6Ikl2YW4gSXZhbm92aWNoIiwiaWF0IjoxNzA2MTI0OTUwLCJleHAiOjE3MDYxMjg1NTB9.Q7zKsH2PtsMS_npaCkO8R-262-_Gz3HJ7hDsYbDVRMw
+Content-Type: application/json
+
+{
+  "status": "public",
+  "type": "quote",
+  "content": {
+    "quote": "new quote 20 symols or more",
+    "author": "I am wilgelm shaqspir"
+  },
+  "tags": ["new", "the_best"]
+}
+
+###
+
+
+# Repost blog by id
+Post http://localhost:3000/api/blog/repost/19e9e029-a674-4980-936b-2143ff3f1dce HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWIwZmMyNGJmNTIyOTliYjJiZGM1ZGYiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jIiwibmFtZSI6Ikl2YW4gSXZhbm92aWNoIiwiaWF0IjoxNzA2MTI2MzcxLCJleHAiOjE3MDYxMjk5NzF9._DrGH49UMvwt3579N4flgpo1ceZI5fH_ex2_OZtyV4Q
+
+
+###
+
+# Delete blog by id
+DELETE http://localhost:3000/api/blog/3ddbfaa4-33ba-4d73-93c9-99eb6ae1e5c9 HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWIwZmMyNGJmNTIyOTliYjJiZGM1ZGYiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jIiwibmFtZSI6Ikl2YW4gSXZhbm92aWNoIiwiaWF0IjoxNzA2MjA4NTcyLCJleHAiOjE3MDYyMTIxNzJ9.eG_KuH0FERiGRAT93VLQozs1GInXgXz1JAUpmVkc2R4
+
+###
+
+# set like for blogId
+PUT http://localhost:3000/api/blog/699eb7b0-b094-4123-839e-109c61aef291/like HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWIwZmMyNGJmNTIyOTliYjJiZGM1ZGYiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jIiwibmFtZSI6Ikl2YW4gSXZhbm92aWNoIiwiaWF0IjoxNzA2MTI2MzcxLCJleHAiOjE3MDYxMjk5NzF9._DrGH49UMvwt3579N4flgpo1ceZI5fH_ex2_OZtyV4Q
+
+###
+
+# Create a new comment
+POST http://localhost:3000/api/blog/699eb7b0-b094-4123-839e-109c61aef291/comment HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWIwZmMyNGJmNTIyOTliYjJiZGM1ZGYiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jIiwibmFtZSI6Ikl2YW4gSXZhbm92aWNoIiwiaWF0IjoxNzA2MTI2MzcxLCJleHAiOjE3MDYxMjk5NzF9._DrGH49UMvwt3579N4flgpo1ceZI5fH_ex2_OZtyV4Q
+
+{
+  "message": "Все круто! Жги! Твой контент вдохновляет"
+}
+
+###
+
+# Get comments for blogId
+GET http://localhost:3000/api/blog/699eb7b0-b094-4123-839e-109c61aef291/comment HTTP/1.1
+Content-Type: application/json
+
+###
+
+# Delete comment by id
+DELETE http://localhost:3000/api/blog/comment/b75cf7bf-2dae-4b2a-a618-4f5c7e515c2c HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWIwZmMyNGJmNTIyOTliYjJiZGM1ZGYiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jIiwibmFtZSI6Ikl2YW4gSXZhbm92aWNoIiwiaWF0IjoxNzA2MjEyMzc2LCJleHAiOjE3MDYyMTU5NzZ9.SpwHfx1RyX60fMwjBfnXdusASjqCq6Ou905X4FHEIvA
+
+###

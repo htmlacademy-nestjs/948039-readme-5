@@ -2,7 +2,7 @@ import { MailerService } from '@nestjs-modules/mailer';
 import { Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 
-import { EMAIL_ADD_SUBSCRIBER_SUBJECT } from './mail.constant';
+import { EMAIL_ADD_SUBSCRIBER_SUBJECT, NEW_BLOGS_SUBJECT } from './mail.constant';
 import { Subscriber } from '@project/libs/app/types';
 import { NotifyConfig } from '@project/libs/config/notify';
 
@@ -14,8 +14,6 @@ export class MailService {
   private readonly notifyConfig: ConfigType<typeof NotifyConfig>
 
   public async sendNotifyNewSubscriber(subscriber: Subscriber) {
-    console.log('111')
-
     await this.mailerService.sendMail({
       from: this.notifyConfig.mail.from,
       to: subscriber.email,
@@ -26,5 +24,21 @@ export class MailService {
         email: `${subscriber.email}`,
       }
     })
+  }
+
+  public async sendNotifyForNewBlogs(subscribers: Subscriber[], blogs: string[]) {
+    for (let sub of subscribers)  {
+      await this.mailerService.sendMail({
+        from: this.notifyConfig.mail.from,
+        to: sub.email,
+        subject: NEW_BLOGS_SUBJECT,
+        template: './new-blogs',
+        context: {
+          user: `${sub.name}`,
+          blogs: blogs,
+        }
+      })
+    }
+
   }
 }

@@ -1,12 +1,15 @@
-import { Expose, Transform } from 'class-transformer';
+import { ApiProperty } from '@nestjs/swagger';
+import { Expose } from 'class-transformer';
 export class LoggedUserRdo {
-  @Transform((query) => query.obj['id'])
   @Expose()
-  public id: string;
-
-  @Expose()
-  public email: string;
-
-  @Expose()
+  @ApiProperty({
+    description: 'Аксесс токен',
+  })
   public accessToken: string;
+
+  @Expose()
+  @ApiProperty({
+    description: 'Рефреш токен',
+  })
+  public refreshToken: string;
 }

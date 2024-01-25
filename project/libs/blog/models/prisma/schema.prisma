@@ -75,11 +75,11 @@ model LinkBlog {
 }
 
 model PhotoBlog {
-  id     String @id @default(uuid())
-  path   String
-  name   String
-  blog   Blog   @relation(fields: [blogId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  blogId String @unique @map("blog_id")
+  id      String @id @default(uuid())
+  photoId String
+  name    String
+  blog    Blog   @relation(fields: [blogId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  blogId  String @unique @map("blog_id")
 
   @@map("photo_blogs")
 }

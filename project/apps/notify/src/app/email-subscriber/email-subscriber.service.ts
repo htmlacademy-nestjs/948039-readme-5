@@ -22,4 +22,9 @@ export class EmailSubscriberService {
       .save(new EmailSubscriberEntity().populate(subscriber))
 
   }
+
+  public async findSubscribers() {
+    const existsSubscribers = await this.emailSubscriberRepository.find();
+    return existsSubscribers;
+  }
 }

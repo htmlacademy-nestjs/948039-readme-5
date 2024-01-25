@@ -65,4 +65,10 @@ export class BlogService {
     const blog = await this.blogRepository.repostById(userId, existBlog);
     return fillDto(BlogRdo, blog);
   }
+
+  public async findUserInfo(userId: string) {
+    const blogCount = await this.blogRepository.findUserInfo(userId);
+
+    return blogCount ?? 0;
+  }
 }

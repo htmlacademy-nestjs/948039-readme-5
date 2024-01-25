@@ -1,11 +1,11 @@
 import { Expose } from 'class-transformer';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsMongoId, IsNotEmpty, IsString } from 'class-validator';
 
 export class PhotoBlogContentCreate {
   @Expose()
   @IsNotEmpty()
-  @IsString()
-  path: string;
+  @IsMongoId()
+  photoId: string;
 
   @Expose()
   @IsNotEmpty()

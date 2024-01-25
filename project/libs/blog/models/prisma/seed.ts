@@ -36,7 +36,7 @@ function getPosts() {
       status: 'public',
       userId: FIRST_USER_ID,
       photoBlog: {
-        path: 'https://clck.ru/37PzZS',
+        photoId: '65afa15e54d0afd4999a3534',
         name: 'Ivan Diador'
       }
     },

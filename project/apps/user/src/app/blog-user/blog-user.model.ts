@@ -8,9 +8,10 @@ import { AuthUser } from '@project/libs/app/types';
 })
 export class BlogUserModel extends Document implements AuthUser {
   @Prop({
-    type: String
+    type: String,
+    default: null
   })
-  public avatar: string;
+  public avatarId: string;
 
   @Prop({
     required: true,

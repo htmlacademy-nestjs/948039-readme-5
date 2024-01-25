@@ -29,6 +29,12 @@ export class BlogController {
     return blog;
   }
 
+  @Get('user/:id')
+  public async findUserInfo(@Param('id') id: string) {
+    const count = await this.blogService.findUserInfo(id);
+    return count;
+  }
+
   @Put(':id')
   public async updateById(
     @Body() dto: UpdateBlogDto,

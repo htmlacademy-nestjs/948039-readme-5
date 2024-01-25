@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { BasePostgresRepository } from '@project/core';
 import { BlogEntity } from './blog.entity';
 import { Blog, BlogStatus, BlogType } from '@project/libs/app/types';
@@ -38,9 +38,12 @@ export class BlogRepository extends BasePostgresRepository<BlogEntity, Blog> {
   }
 
   public async find(param: BlogQuery): Promise<BlogPostWithPaginationRdo> {
-    const {type, page, pageSize, sort, direction, search, tag} = param;
+    let {type, page, pageSize, sort, direction, search, tag} = param;
     const filter = blogFilter({type, search, tag});
     const orderBy = blogSort({sort, direction});
+    if (search) {
+      pageSize = 20;
+    }
     const skip = (page - 1) * pageSize;
     const totalItems = await this.client.blog.count({
       where: filter
@@ -97,7 +100,9 @@ export class BlogRepository extends BasePostgresRepository<BlogEntity, Blog> {
         likes: true,
       },
     });
-
+    if (blog === null) {
+      throw new NotFoundException();
+    }
     const {videoBlog, photoBlog, quoteBlog, comments, likes, textBlog, linkBlog, ...entity} = blog;
     const MAP = {
       video: videoBlog,
@@ -114,6 +119,15 @@ export class BlogRepository extends BasePostgresRepository<BlogEntity, Blog> {
       status: entity.status as BlogStatus
     });
     return blogEntity;
+  }
+
+  public async findUserInfo(id: string): Promise<number> {
+    const blogCount = await this.client.blog.count({
+      where: {userId: id},
+    });
+
+
+    return blogCount;
   }
 
   public async updateById(id: string, entity: BlogEntity, newBlogEntity: BlogEntity): Promise<BlogEntity> {
@@ -179,5 +193,13 @@ export class BlogRepository extends BasePostgresRepository<BlogEntity, Blog> {
     });
     const repostBlogEntity = await this.save(newBlogEntity);
     return repostBlogEntity;
+  }
+
+  public async findNew(date: Date): Promise<string[]> {
+    const blogs = await this.client.blog.findMany({
+      where: {createdDate: {gt: date}}
+    });
+    const newBlogId = blogs.map(blog => blog.id)
+    return newBlogId;
   }
 }

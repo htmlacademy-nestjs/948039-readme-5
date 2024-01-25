@@ -1,0 +1,47 @@
+# Create a new user
+POST http://localhost:3000/api/users/register HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "user@notfound.locale",
+  "name": "Ivan Ivanovich",
+  "password": "123456"
+}
+###
+
+# Login user by email and password
+POST http://localhost:3000/api/users/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "user@notfound.loc",
+  "password": "123456"
+}
+
+###
+
+# Get new JWT pair
+POST http://localhost:3000/api/users/refresh HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWIwZmMyNGJmNTIyOTliYjJiZGM1ZGYiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jIiwibmFtZSI6Ikl2YW4gSXZhbm92aWNoIiwidG9rZW5JZCI6IjkyZDc5YmRjLTUwOTAtNGU1OS1hODE2LTQ4NmRlZWM4MTliMyIsImlhdCI6MTcwNjIwODU3MiwiZXhwIjoxNzA2Mjk0OTcyfQ.jNNuquX3YLtP9u2DIGx76g0ufWzVbuEMQxv4AH-7EEo
+Content-Type: application/json
+
+###
+
+# Change user password
+PUT http://localhost:3000/api/users/password HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWIwZmMyZGJmNTIyOTliYjJiZGM1ZTIiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jYWxlIiwibmFtZSI6Ikl2YW4gSXZhbm92aWNoIiwiaWF0IjoxNzA2MDk3NzQyLCJleHAiOjE3MDYxMDEzNDJ9.rLLkgqJPGGL2QGyyIPgrsP_Q09cAnMNyyJSA_uLyaZQ
+
+{
+  "oldPassword": "123456",
+  "newPassword": "123456"
+}
+
+###
+
+# Get user info
+GET http://localhost:3000/api/users/65b0fc24bf52299bb2bdc5df HTTP/1.1
+Content-Type: application/json
+
+###
+
