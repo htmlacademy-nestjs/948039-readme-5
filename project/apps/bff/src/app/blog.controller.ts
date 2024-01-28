@@ -12,6 +12,7 @@ import { SetLikeDto } from './dto/set-like';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { DeleteCommentDto } from './dto/delete-comment.dto';
 import { CommentQuery } from './query/comment-query';
+import { BlogType } from '@project/libs/app/types';
 
 @Controller('blog')
 @UseFilters(AxiosExceptionFilter)
@@ -34,7 +35,7 @@ export class BlogController {
       params: query
     });
     const users = data.data.map(data => data.userId);
-    const photos = data.data.filter(data => data.type === 'photo').map(data => data.content.photoId);
+    const photos = data.data.filter(data => data.type === BlogType.Photo).map(data => data.content.photoId);
     const detailPhotos = [];
     for (let photoId of photos) {
       const { data } = await this.httpService.axiosRef.get(`${ApplicationServiceURL.File}/${photoId}`);
@@ -46,7 +47,7 @@ export class BlogController {
       detailUsers.push(data);
     }
     data.data.forEach((blog, idx, blogs) => {
-      if (blog.type === 'photo') {
+      if (blog.type === BlogType.Photo) {
         const detailtPhotoContent = detailPhotos.find(detail => detail.id === blog.content.photoId)
         blogs[idx].content.photoDetail = detailtPhotoContent;
       }
@@ -60,7 +61,7 @@ export class BlogController {
   @Get(':id')
   public async findById(@Param('id') id: string) {
     const { data } = await this.httpService.axiosRef.get(`${ApplicationServiceURL.Blog}/${id}`);
-    if (data.type === 'photo') {
+    if (data.type === BlogType.Photo) {
       const { data: detailtPhotoContent } = await this.httpService.axiosRef.get(`${ApplicationServiceURL.File}/${data.content.photoId}`);
       data.content.photoDetail = detailtPhotoContent;
     }

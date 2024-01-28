@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsMongoId, IsOptional, IsString, Length } from 'class-validator';
+import { MAX_PASSWORD_LENGHT, MAX_USERNAME_LENGHT, MIN_PASSWORD_LENGHT, MIN_USERNAME_LENGHT } from '../authentication.constants';
 
 export class CreateUserDto {
   @IsEmail()
@@ -11,7 +12,7 @@ export class CreateUserDto {
   public email: string;
 
   @IsString()
-  @Length(3, 50)
+  @Length(MIN_USERNAME_LENGHT, MAX_USERNAME_LENGHT)
   @ApiProperty({
     description: 'User name',
     example: 'Ivan Ivanovich',
@@ -20,7 +21,7 @@ export class CreateUserDto {
   public name: string;
 
   @IsString()
-  @Length(6, 12)
+  @Length(MIN_PASSWORD_LENGHT, MAX_PASSWORD_LENGHT)
   @ApiProperty({
     description: 'Password',
     example: '123456',
