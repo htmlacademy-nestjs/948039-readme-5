@@ -1,9 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsMongoId, IsString, Length } from 'class-validator';
+import { MAX_PASSWORD_LENGHT, MIN_PASSWORD_LENGHT } from '../constants';
 
 export class ChangePasswordDto {
   @IsString()
-  @Length(6, 12)
+  @Length(MIN_PASSWORD_LENGHT, MAX_PASSWORD_LENGHT)
   @ApiProperty({
     description: 'old password',
     example: 'test1234',
@@ -12,7 +13,7 @@ export class ChangePasswordDto {
   public oldPassword: string;
 
   @IsString()
-  @Length(6, 12)
+  @Length(MIN_PASSWORD_LENGHT, MAX_PASSWORD_LENGHT)
   @ApiProperty({
     description: 'new password',
     example: 'test12345',

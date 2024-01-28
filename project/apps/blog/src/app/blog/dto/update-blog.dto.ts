@@ -2,6 +2,7 @@ import { Transform, Type } from 'class-transformer';
 import { IsArray, IsEnum, IsNotEmpty, IsNotEmptyObject, IsOptional, IsString, Matches, MaxLength, MinLength, ValidateNested } from 'class-validator';
 
 import { BlogContentCreate, BlogStatus, BlogType, LinkBlogContentCreate, PhotoBlogContentCreate, QuoteBlogContentCreate, TextBlogContentCreate, VideoBlogContentCreate } from '@project/libs/app/types';
+import { MAX_TAG_LENGHT, MIN_TAG_LENGHT, REGEXP_TAG } from '../constants';
 
 export class UpdateBlogDto {
   @IsEnum(BlogType)
@@ -43,9 +44,9 @@ export class UpdateBlogDto {
   @IsArray()
   @IsString({each: true})
   @IsNotEmpty({each: true})
-  @MinLength(3,{each: true})
-  @MaxLength(10,{each: true})
-  @Matches(/^[a-zA-Zа-яА-Я][a-zA-Z0-9_#]{2,9}$/, {
+  @MinLength(MIN_TAG_LENGHT,{each: true})
+  @MaxLength(MAX_TAG_LENGHT,{each: true})
+  @Matches(REGEXP_TAG, {
     each: true,
     message: 'tag must start with a letter and can only contain letters, numbers, underscores and pound.',
   })

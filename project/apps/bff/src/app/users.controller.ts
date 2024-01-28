@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Headers, NotAcceptableException, Param, Post, Put, Req, UseFilters, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Get, Headers, NotAcceptableException, Param, Post, Put, Req, UseFilters, UseGuards } from '@nestjs/common';
 import { ApplicationServiceURL } from './app.config';
 import { HttpService } from '@nestjs/axios';
 import { LoginUserDto } from './dto/login-user.dto';

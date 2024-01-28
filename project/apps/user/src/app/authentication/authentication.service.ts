@@ -22,9 +22,7 @@ export class AuthenticationService {
     private readonly jwtService: JwtService,
     @Inject (jwtConfig.KEY) private readonly jwtOptions: ConfigType<typeof jwtConfig>,
     private readonly refreshTokenService: RefreshTokenService,
-  ) {
-
-  }
+  ) { }
 
   public async register(dto: CreateUserDto) {
     const {email, avatarId, name, password} = dto;
